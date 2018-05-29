@@ -4,7 +4,7 @@
 
     <groupId>com.lifeomic</groupId>
     <artifactId>fhirlib</artifactId>
-    <version>0.2</version>
+    <version>0.2.2</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -81,7 +81,6 @@
                 <configuration>
                     <serverId>ossrh</serverId>
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
             <plugin>
