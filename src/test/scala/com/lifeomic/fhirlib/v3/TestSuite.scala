@@ -1,0 +1,71 @@
+package com.lifeomic.fhirlib.v3
+
+import com.lifeomic.fhirlib.v3.resources._
+import org.scalactic.TolerantNumerics
+import org.scalatest.FunSuite
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+
+@RunWith(classOf[JUnitRunner])
+class TestSuite extends FunSuite {
+    implicit val doubleEq = TolerantNumerics.tolerantDoubleEquality(1e-8)
+    
+    test("Test Patient") {
+        val json = scala.io.Source.fromFile(getClass.getResource("/Patient.test.json").getFile).mkString
+        val patient = Deserializer.loadFhirResource(json).asInstanceOf[Patient]
+
+        assert(patient.gender.orNull == Gender.female)
+        assert(patient.birthDate.orNull.year().get()  == 1993)
+        assert(patient.birthDate.orNull.monthOfYear().get()  == 5)
+        assert(patient.birthDate.orNull.dayOfMonth().get()  == 7)
+        assert(patient.meta.orNull.tag.get.head.system.get.getHost()  == "lifeomic.com")
+        assert(patient.meta.orNull.tag.get.head.system.get.getPath()  == "/fhir/dataset")
+
+        val raceCoding = patient.getRaceCoding()
+        assert(raceCoding.code.get  == "2106-3")
+        assert(raceCoding.display.get  == "White")
+        assert(patient.getEthnicityCoding().code.get  == "2186-5")
+        assert(patient.getEthnicityCoding().display.get  == "Nonhispanic")
+        assert(patient.getAge().get >= 25)
+        assert(patient.getLanguageCodes().head  == "en-US")
+
+        assert(patient.getAddresses().head.getLatitude().get  == 42.183400380260686)
+        assert(patient.getAddresses().head.getLongitude().get  == -72.46253600130517)
+    }
+
+    test("Test Specimen") {
+        val json = scala.io.Source.fromFile(getClass.getResource("/Specimen.test.json").getFile).mkString
+        val specimen = Deserializer.loadFhirResource(json).asInstanceOf[Specimen]
+
+        assert(specimen.status.get == Specimen_Status.available)
+        assert(specimen.getIdentifier("http://ehr.acme.org/identifiers/collections").orNull == "23234352356")
+        assert(specimen.getTypeCodings().head.code.get == "122555007")
+        assert(specimen.getTypeCodings().head.system.get.toString == "http://snomed.info/sct")
+    }
+
+    test("Test Condition") {
+        val json = scala.io.Source.fromFile(getClass.getResource("/Condition.test.json").getFile).mkString
+        val resource = Deserializer.loadFhirResource(json).asInstanceOf[Condition]
+
+        assert(resource.id.get == "example")
+        assert(resource.clinicalStatus.get.toString == ClinicalStatus.active.toString)
+        assert(resource.verificationStatus.get == VerificationStatus.confirmed)
+        assert(resource.subject.reference.get.getPath == "Patient/example")
+        assert(resource.onsetDateTime.get.year().get() == 2012)
+    }
+
+    test("Test MedicationAdministration") {
+        val json = scala.io.Source.fromFile(getClass.getResource("/MedicationAdministration.test.json").getFile).mkString
+        val resource = Deserializer.loadFhirResource(json).asInstanceOf[MedicationAdministration]
+
+        assert(resource.id.get == "medadmin0301")
+
+        val containedMeds = resource.getContained[Medication]
+        assert(containedMeds.length == 1)
+
+        val med = resource.getContained(resource.medicationReference.get.reference.get.getFragment)
+        assert(med.get.id.get == "med0301")
+        assert(resource.medicationReference.get.getId().get == "med0301")
+        assert(resource.status == "in-progress")
+    }
+}
