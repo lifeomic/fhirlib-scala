@@ -24,3 +24,6 @@ object Example extends App {
   println(patient.birthDate.get.year().get())
 }
 ```
+
+## Docs
+https://lifeomic.github.io/fhirlib-scala/#com.lifeomic.fhirlib.v3.package
