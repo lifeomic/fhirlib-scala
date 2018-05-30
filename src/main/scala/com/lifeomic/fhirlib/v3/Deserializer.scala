@@ -21,7 +21,7 @@ case object DateTimeSerializer extends CustomSerializer[DateTime](format => (
     }
 ))
 
-private object ResourceSerializer extends Serializer[Resource] {
+object ResourceSerializer extends Serializer[Resource] {
     private val ParentClass = classOf[Resource]
 
     def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), Resource] = {

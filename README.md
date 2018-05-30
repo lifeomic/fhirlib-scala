@@ -5,7 +5,7 @@
 <dependency>
   <groupId>com.lifeomic</groupId>
   <artifactId>fhirlib</artifactId>
-  <version>0.2.2</version>
+  <version>0.2.9</version>
 </dependency>
 ```
 

@@ -21,11 +21,11 @@ class TestSuite extends FunSuite {
         assert(patient.meta.orNull.tag.get.head.system.get.getHost()  == "lifeomic.com")
         assert(patient.meta.orNull.tag.get.head.system.get.getPath()  == "/fhir/dataset")
 
-        val raceCoding = patient.getRaceCoding()
+        val raceCoding = patient.getRaceCoding().get
         assert(raceCoding.code.get  == "2106-3")
         assert(raceCoding.display.get  == "White")
-        assert(patient.getEthnicityCoding().code.get  == "2186-5")
-        assert(patient.getEthnicityCoding().display.get  == "Nonhispanic")
+        assert(patient.getEthnicityCoding().get.code.get  == "2186-5")
+        assert(patient.getEthnicityCoding().get.display.get  == "Nonhispanic")
         assert(patient.getAge().get >= 25)
         assert(patient.getLanguageCodes().head  == "en-US")
 
@@ -37,7 +37,7 @@ class TestSuite extends FunSuite {
         val json = scala.io.Source.fromFile(getClass.getResource("/Specimen.test.json").getFile).mkString
         val specimen = Deserializer.loadFhirResource(json).asInstanceOf[Specimen]
 
-        assert(specimen.status.get == Specimen_Status.available)
+        assert(specimen.status.get == "available")
         assert(specimen.getIdentifier("http://ehr.acme.org/identifiers/collections").orNull == "23234352356")
         assert(specimen.getTypeCodings().head.code.get == "122555007")
         assert(specimen.getTypeCodings().head.system.get.toString == "http://snomed.info/sct")
@@ -49,7 +49,7 @@ class TestSuite extends FunSuite {
 
         assert(resource.id.get == "example")
         assert(resource.clinicalStatus.get.toString == ClinicalStatus.active.toString)
-        assert(resource.verificationStatus.get == VerificationStatus.confirmed)
+        assert(resource.verificationStatus.get == "confirmed")
         assert(resource.subject.reference.get.getPath == "Patient/example")
         assert(resource.onsetDateTime.get.year().get() == 2012)
     }

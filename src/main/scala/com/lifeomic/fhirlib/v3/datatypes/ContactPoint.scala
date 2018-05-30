@@ -8,7 +8,7 @@ import ContactPoint_Use._
 
 class ContactPoint(val system: Option[String],
                    val value: Option[String],
-                   val use: Option[ContactPoint_Use],
+                   val use: Option[String],
                    val rank: Option[String],
                    val period: Option[Period]) {
 

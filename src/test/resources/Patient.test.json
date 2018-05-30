@@ -14,7 +14,7 @@
   },
   "extension": [
     {
-      "url": "http://hl7.org/fhir/StructureDefinition/us-core-race",
+      "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
       "valueCodeableConcept": {
         "coding": [
           {
@@ -27,7 +27,7 @@
       }
     },
     {
-      "url": "http://hl7.org/fhir/StructureDefinition/us-core-ethnicity",
+      "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
       "valueCodeableConcept": {
         "coding": [
           {

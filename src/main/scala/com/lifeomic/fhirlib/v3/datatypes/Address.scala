@@ -14,8 +14,8 @@ object Address_Type extends Enumeration {
 import Address_Use._
 import Address_Type._
 
-class Address(val use: Option[Address_Use],
-              val `type`: Option[Address_Type],
+class Address(val use: Option[String],
+              val `type`: Option[String],
               val text: Option[String],
               val line: Option[List[String]],
               val city: Option[String],
@@ -32,7 +32,7 @@ class Address(val use: Option[Address_Use],
                 .head.extension.get.filter(_.url.toString == "latitude")
                 .head.valueDecimal
         } catch {
-            case _ : Throwable => null
+            case _ : Throwable => None
         }
     }
 
@@ -42,7 +42,7 @@ class Address(val use: Option[Address_Use],
                 .head.extension.get.filter(_.url.toString == "longitude")
                 .head.valueDecimal
         } catch {
-            case _ : Throwable => null
+            case _ : Throwable => None
         }
     }
 }

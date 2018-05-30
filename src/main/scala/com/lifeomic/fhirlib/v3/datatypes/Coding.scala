@@ -7,7 +7,4 @@ class Coding(val system: Option[URI],
              val code: Option[String],
              val display: Option[String],
              val userSelected: Option[Boolean]) {
-    def flatten(): Seq[Any] = {
-        Seq(system.orNull, version.orNull, code.orNull, display.orNull, userSelected.orNull)
-    }
 }

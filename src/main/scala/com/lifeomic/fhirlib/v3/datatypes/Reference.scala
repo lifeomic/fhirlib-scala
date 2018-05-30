@@ -7,8 +7,8 @@ class Reference(val reference: Option[URI],
                 val display: Option[String]) {
     def getId(): Option[String] = {
         try {
-            if (!reference.get.getFragment().isEmpty) {
-                return Some(reference.get.getFragment())
+            if (reference.get.getFragment != null) {
+                return Some(reference.get.getFragment)
             }
             reference.get.getPath.split("/").lastOption
         } catch {

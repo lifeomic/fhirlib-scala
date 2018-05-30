@@ -4,7 +4,7 @@
 
     <groupId>com.lifeomic</groupId>
     <artifactId>fhirlib</artifactId>
-    <version>0.2.2</version>
+    <version>0.2.9</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -188,6 +188,7 @@
                     <scalaVersion>${scala.version}</scalaVersion>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 
@@ -245,6 +246,5 @@
         <connection>scm:git:git://github.com/lifeomic/fhirlib-scala.git </connection>
         <developerConnection>scm:git:ssh://github.com/lifeomic/fhirlib-scala.git </developerConnection>
         <url>http://github.com/lifeomic/fhirlib-scala/tree/master</url>
-      <tag>fhirlib-0.2</tag>
   </scm>
 </project>

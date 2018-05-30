@@ -61,29 +61,26 @@ class Patient(override val id: Option[String],
               val managingOrganization: Option[Reference],
               val link: Option[List[Link]]) extends Resource("Patient", id, contained, meta, extension, identifier) {
 
-    def getRaceCoding(): Coding = {
-        if (!extension.isEmpty) {
-            val ext = extension.get.filter(_.url.toString == "http://hl7.org/fhir/StructureDefinition/us-core-race").headOption
-            if (!ext.isEmpty && !ext.get.valueCodeableConcept.isEmpty &&
-                !ext.get.valueCodeableConcept.get.coding.isEmpty) {
-                val coding = ext.get.valueCodeableConcept.get.coding.get
-                val raceCoding = coding.filter(_.system.get.toString == "http://hl7.org/fhir/v3/Race").headOption
-                return raceCoding.orNull
-            }
+    def getRaceCoding(urlContains: String = "us-core-race",
+                      systemContains: String = "Race"): Option[Coding] = {
+        try {
+            val ext = extension.get.filter(_.url.toString contains urlContains).headOption
+            val coding = ext.get.valueCodeableConcept.get.coding.get
+            return coding.filter(x => x.system.nonEmpty && (x.system.get.toString contains systemContains)).headOption
+        } catch {
+            case _ : Throwable => None
         }
-        return null
     }
 
-    def getEthnicityCoding(): Coding = {
-        if (!extension.isEmpty) {
-            val ext = extension.get.filter(_.url.toString == "http://hl7.org/fhir/StructureDefinition/us-core-ethnicity").headOption
-            if (!ext.isEmpty && !ext.get.valueCodeableConcept.isEmpty &&
-                !ext.get.valueCodeableConcept.get.coding.isEmpty) {
-                val coding = ext.get.valueCodeableConcept.get.coding.get
-                return coding.filter(_.system.get.toString == "http://hl7.org/fhir/v3/Ethnicity").headOption.orNull
-            }
+    def getEthnicityCoding(urlContains: String = "us-core-ethnicity",
+                           systemContains: String = "Ethnicity"): Option[Coding] = {
+        try {
+            val ext = extension.get.filter(_.url.toString contains urlContains).headOption
+            val coding = ext.get.valueCodeableConcept.get.coding.get
+            return coding.filter(x => x.system.nonEmpty && (x.system.get.toString contains systemContains)).headOption
+        } catch {
+            case _ : Throwable => None
         }
-        return null
     }
 
     def getLanguageCodes(): List[String] = {
@@ -112,7 +109,7 @@ class Patient(override val id: Option[String],
 
     def getAge(): Option[Int] = {
         if (birthDate.isEmpty) {
-            return null
+            return None
         }
         return Some(Years.yearsBetween(birthDate.get, DateTime.now).getYears)
     }

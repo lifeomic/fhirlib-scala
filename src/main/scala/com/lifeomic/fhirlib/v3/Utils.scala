@@ -21,7 +21,6 @@ object Utils {
 
         var report : ProcessingReport = null
         report = schema.validate(json)
-        println(report)
         report.isSuccess()
     }
 }

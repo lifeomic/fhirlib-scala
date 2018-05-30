@@ -27,7 +27,7 @@ object RelatedType extends Enumeration {
 
 import RelatedType._
 
-class Related(val `type`: Option[RelatedType],
+class Related(val `type`: Option[String],
               val target: Reference)
 
 class ObservationComponent(val code: CodeableConcept,
@@ -51,7 +51,7 @@ class Observation(override val id: Option[String],
                   override val extension: Option[List[Extension]],
                   override val identifier: Option[List[Identifier]],
                   val basedOn: Option[List[Reference]],
-                  val status: ObservationStatus,
+                  val status: String,
                   val category: Option[List[CodeableConcept]],
                   val code: CodeableConcept,
                   val subject: Option[Reference],

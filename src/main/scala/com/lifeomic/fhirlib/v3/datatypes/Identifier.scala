@@ -8,7 +8,7 @@ object Identifier_Use extends Enumeration {
 }
 import Identifier_Use._
 
-class Identifier(val use: Option[Identifier_Use],
+class Identifier(val use: Option[String],
                  val `type`: Option[CodeableConcept],
                  val system: Option[URI],
                  val value: Option[String],

@@ -6,7 +6,7 @@ object HumanName_Use extends Enumeration {
 }
 import HumanName_Use._
 
-class HumanName(val use: Option[HumanName_Use],
+class HumanName(val use: Option[String],
                 val text: Option[String],
                 val family: Option[String],
                 val given: Option[List[String]],

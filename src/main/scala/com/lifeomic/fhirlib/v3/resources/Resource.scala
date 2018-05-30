@@ -17,7 +17,7 @@ class Resource(val resourceType: String,
         try {
             identifier.get.filter(_.system.get.toString() == system).head.value
         } catch {
-            case _ : Throwable => null
+            case _ : Throwable => None
         }
     }
 
@@ -36,7 +36,7 @@ class Resource(val resourceType: String,
             val res = contained.get.filter(x => x.id.orNull == id)
             return res.headOption
         } catch {
-            case _ : Throwable => null
+            case _ : Throwable => None
         }
     }
 }
