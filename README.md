@@ -1,11 +1,11 @@
-# fhirlib for scala
+# A simple scala deserializer for FHIR resources
 
 ## Install as a maven dependency
 ```
 <dependency>
   <groupId>com.lifeomic</groupId>
   <artifactId>fhirlib</artifactId>
-  <version>0.2.9</version>
+  <version>0.3.2</version>
 </dependency>
 ```
 

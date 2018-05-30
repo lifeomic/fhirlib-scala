@@ -6,7 +6,7 @@ import java.net.URI
 import com.lifeomic.fhirlib.v3.resources.Schedule
 import org.joda.time.DateTime
 
-class Extension(val url: URI,
+class Extension(val url: Option[URI],
                 val extension: Option[List[Extension]],
                 val valueInteger: Option[Int],
                 val valueDecimal: Option[Double],
@@ -31,4 +31,7 @@ class Extension(val url: URI,
                 val valueSchedule: Option[Schedule],
                 val valueReference: Option[Reference]) {
 
+    def getUrlString(): String = {
+        return url.map(_.toString).getOrElse("")
+    }
 }

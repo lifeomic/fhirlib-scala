@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>SampledData - com.lifeomic:fhirlib 0.2.9 API - com.lifeomic.fhirlib.v3.datatypes.SampledData</title>
-          <meta name="description" content="SampledData - com.lifeomic fhirlib 0.2.9 API - com.lifeomic.fhirlib.v3.datatypes.SampledData" />
-          <meta name="keywords" content="SampledData com.lifeomic fhirlib 0.2.9 API com.lifeomic.fhirlib.v3.datatypes.SampledData" />
+          <title>SampledData - com.lifeomic:fhirlib 0.3.2 API - com.lifeomic.fhirlib.v3.datatypes.SampledData</title>
+          <meta name="description" content="SampledData - com.lifeomic fhirlib 0.3.2 API - com.lifeomic.fhirlib.v3.datatypes.SampledData" />
+          <meta name="keywords" content="SampledData com.lifeomic fhirlib 0.3.2 API com.lifeomic.fhirlib.v3.datatypes.SampledData" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -89,7 +89,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.lifeomic.fhirlib.v3.datatypes.SampledData#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(origin:com.lifeomic.fhirlib.v3.datatypes.Quantity,period:Double,factor:Option[Double],lowerLimit:Option[Double],upperLimit:Option[Double],dimensions:String,data:String):com.lifeomic.fhirlib.v3.datatypes.SampledData"></a>
+      <a id="&lt;init&gt;(origin:com.lifeomic.fhirlib.v3.datatypes.Quantity,period:Double,factor:Option[Double],lowerLimit:Option[Double],upperLimit:Option[Double],dimensions:Option[String],data:Option[String]):com.lifeomic.fhirlib.v3.datatypes.SampledData"></a>
       <a id="&lt;init&gt;:SampledData"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -97,10 +97,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">SampledData</span><span class="params">(<span name="origin">origin: <a href="Quantity.html" class="extype" name="com.lifeomic.fhirlib.v3.datatypes.Quantity">Quantity</a></span>, <span name="period">period: <span class="extype" name="scala.Double">Double</span></span>, <span name="factor">factor: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Double">Double</span>]</span>, <span name="lowerLimit">lowerLimit: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Double">Double</span>]</span>, <span name="upperLimit">upperLimit: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Double">Double</span>]</span>, <span name="dimensions">dimensions: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="data">data: <span class="extype" name="scala.Predef.String">String</span></span>)</span>
+        <span class="name">SampledData</span><span class="params">(<span name="origin">origin: <a href="Quantity.html" class="extype" name="com.lifeomic.fhirlib.v3.datatypes.Quantity">Quantity</a></span>, <span name="period">period: <span class="extype" name="scala.Double">Double</span></span>, <span name="factor">factor: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Double">Double</span>]</span>, <span name="lowerLimit">lowerLimit: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Double">Double</span>]</span>, <span name="upperLimit">upperLimit: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Double">Double</span>]</span>, <span name="dimensions">dimensions: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="data">data: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#com.lifeomic.fhirlib.v3.datatypes.SampledData@&lt;init&gt;(origin:com.lifeomic.fhirlib.v3.datatypes.Quantity,period:Double,factor:Option[Double],lowerLimit:Option[Double],upperLimit:Option[Double],dimensions:String,data:String):com.lifeomic.fhirlib.v3.datatypes.SampledData" title="Permalink" target="_top">
+      <a href="../../../../../index.html#com.lifeomic.fhirlib.v3.datatypes.SampledData@&lt;init&gt;(origin:com.lifeomic.fhirlib.v3.datatypes.Quantity,period:Double,factor:Option[Double],lowerLimit:Option[Double],upperLimit:Option[Double],dimensions:Option[String],data:Option[String]):com.lifeomic.fhirlib.v3.datatypes.SampledData" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -206,35 +206,35 @@
               
         </dd></dl></div>
     </li><li name="com.lifeomic.fhirlib.v3.datatypes.SampledData#data" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="data:String"></a>
-      <a id="data:String"></a>
+      <a id="data:Option[String]"></a>
+      <a id="data:Option[String]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">data</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+        <span class="name">data</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#com.lifeomic.fhirlib.v3.datatypes.SampledData@data:String" title="Permalink" target="_top">
+      <a href="../../../../../index.html#com.lifeomic.fhirlib.v3.datatypes.SampledData@data:Option[String]" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       
     </li><li name="com.lifeomic.fhirlib.v3.datatypes.SampledData#dimensions" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="dimensions:String"></a>
-      <a id="dimensions:String"></a>
+      <a id="dimensions:Option[String]"></a>
+      <a id="dimensions:Option[String]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">dimensions</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+        <span class="name">dimensions</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#com.lifeomic.fhirlib.v3.datatypes.SampledData@dimensions:String" title="Permalink" target="_top">
+      <a href="../../../../../index.html#com.lifeomic.fhirlib.v3.datatypes.SampledData@dimensions:Option[String]" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>

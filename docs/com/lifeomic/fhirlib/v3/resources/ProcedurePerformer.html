@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>ProcedurePerformer - com.lifeomic:fhirlib 0.2.9 API - com.lifeomic.fhirlib.v3.resources.ProcedurePerformer</title>
-          <meta name="description" content="ProcedurePerformer - com.lifeomic fhirlib 0.2.9 API - com.lifeomic.fhirlib.v3.resources.ProcedurePerformer" />
-          <meta name="keywords" content="ProcedurePerformer com.lifeomic fhirlib 0.2.9 API com.lifeomic.fhirlib.v3.resources.ProcedurePerformer" />
+          <title>ProcedurePerformer - com.lifeomic:fhirlib 0.3.2 API - com.lifeomic.fhirlib.v3.resources.ProcedurePerformer</title>
+          <meta name="description" content="ProcedurePerformer - com.lifeomic fhirlib 0.3.2 API - com.lifeomic.fhirlib.v3.resources.ProcedurePerformer" />
+          <meta name="keywords" content="ProcedurePerformer com.lifeomic fhirlib 0.3.2 API com.lifeomic.fhirlib.v3.resources.ProcedurePerformer" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -89,7 +89,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.lifeomic.fhirlib.v3.resources.ProcedurePerformer#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(role:Option[com.lifeomic.fhirlib.v3.datatypes.CodeableConcept],actor:com.lifeomic.fhirlib.v3.datatypes.Reference,onBehalfOf:Option[com.lifeomic.fhirlib.v3.datatypes.Reference]):com.lifeomic.fhirlib.v3.resources.ProcedurePerformer"></a>
+      <a id="&lt;init&gt;(role:Option[com.lifeomic.fhirlib.v3.datatypes.CodeableConcept],actor:Option[com.lifeomic.fhirlib.v3.datatypes.Reference],onBehalfOf:Option[com.lifeomic.fhirlib.v3.datatypes.Reference]):com.lifeomic.fhirlib.v3.resources.ProcedurePerformer"></a>
       <a id="&lt;init&gt;:ProcedurePerformer"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -97,10 +97,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">ProcedurePerformer</span><span class="params">(<span name="role">role: <span class="extype" name="scala.Option">Option</span>[<a href="../datatypes/CodeableConcept.html" class="extype" name="com.lifeomic.fhirlib.v3.datatypes.CodeableConcept">CodeableConcept</a>]</span>, <span name="actor">actor: <a href="../datatypes/Reference.html" class="extype" name="com.lifeomic.fhirlib.v3.datatypes.Reference">Reference</a></span>, <span name="onBehalfOf">onBehalfOf: <span class="extype" name="scala.Option">Option</span>[<a href="../datatypes/Reference.html" class="extype" name="com.lifeomic.fhirlib.v3.datatypes.Reference">Reference</a>]</span>)</span>
+        <span class="name">ProcedurePerformer</span><span class="params">(<span name="role">role: <span class="extype" name="scala.Option">Option</span>[<a href="../datatypes/CodeableConcept.html" class="extype" name="com.lifeomic.fhirlib.v3.datatypes.CodeableConcept">CodeableConcept</a>]</span>, <span name="actor">actor: <span class="extype" name="scala.Option">Option</span>[<a href="../datatypes/Reference.html" class="extype" name="com.lifeomic.fhirlib.v3.datatypes.Reference">Reference</a>]</span>, <span name="onBehalfOf">onBehalfOf: <span class="extype" name="scala.Option">Option</span>[<a href="../datatypes/Reference.html" class="extype" name="com.lifeomic.fhirlib.v3.datatypes.Reference">Reference</a>]</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#com.lifeomic.fhirlib.v3.resources.ProcedurePerformer@&lt;init&gt;(role:Option[com.lifeomic.fhirlib.v3.datatypes.CodeableConcept],actor:com.lifeomic.fhirlib.v3.datatypes.Reference,onBehalfOf:Option[com.lifeomic.fhirlib.v3.datatypes.Reference]):com.lifeomic.fhirlib.v3.resources.ProcedurePerformer" title="Permalink" target="_top">
+      <a href="../../../../../index.html#com.lifeomic.fhirlib.v3.resources.ProcedurePerformer@&lt;init&gt;(role:Option[com.lifeomic.fhirlib.v3.datatypes.CodeableConcept],actor:Option[com.lifeomic.fhirlib.v3.datatypes.Reference],onBehalfOf:Option[com.lifeomic.fhirlib.v3.datatypes.Reference]):com.lifeomic.fhirlib.v3.resources.ProcedurePerformer" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -166,18 +166,18 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="com.lifeomic.fhirlib.v3.resources.ProcedurePerformer#actor" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="actor:com.lifeomic.fhirlib.v3.datatypes.Reference"></a>
-      <a id="actor:Reference"></a>
+      <a id="actor:Option[com.lifeomic.fhirlib.v3.datatypes.Reference]"></a>
+      <a id="actor:Option[Reference]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">actor</span><span class="result">: <a href="../datatypes/Reference.html" class="extype" name="com.lifeomic.fhirlib.v3.datatypes.Reference">Reference</a></span>
+        <span class="name">actor</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<a href="../datatypes/Reference.html" class="extype" name="com.lifeomic.fhirlib.v3.datatypes.Reference">Reference</a>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#com.lifeomic.fhirlib.v3.resources.ProcedurePerformer@actor:com.lifeomic.fhirlib.v3.datatypes.Reference" title="Permalink" target="_top">
+      <a href="../../../../../index.html#com.lifeomic.fhirlib.v3.resources.ProcedurePerformer@actor:Option[com.lifeomic.fhirlib.v3.datatypes.Reference]" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>

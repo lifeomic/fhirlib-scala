@@ -28,8 +28,8 @@ class Address(val use: Option[String],
 
     def getLatitude(): Option[Double] = {
         try {
-            extension.get.filter(_.url.toString == "http://hl7.org/fhir/StructureDefinition/geolocation")
-                .head.extension.get.filter(_.url.toString == "latitude")
+            extension.get.filter(_.getUrlString() == "http://hl7.org/fhir/StructureDefinition/geolocation")
+                .head.extension.get.filter(_.getUrlString() == "latitude")
                 .head.valueDecimal
         } catch {
             case _ : Throwable => None
@@ -38,8 +38,8 @@ class Address(val use: Option[String],
 
     def getLongitude(): Option[Double] = {
         try {
-            extension.get.filter(_.url.toString == "http://hl7.org/fhir/StructureDefinition/geolocation")
-                .head.extension.get.filter(_.url.toString == "longitude")
+            extension.get.filter(_.getUrlString() == "http://hl7.org/fhir/StructureDefinition/geolocation")
+                .head.extension.get.filter(_.getUrlString() == "longitude")
                 .head.valueDecimal
         } catch {
             case _ : Throwable => None

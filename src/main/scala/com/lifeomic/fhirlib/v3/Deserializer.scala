@@ -1,8 +1,11 @@
 package com.lifeomic.fhirlib.v3
 
+import java.time.format.DateTimeFormatter
+
 import com.fasterxml.jackson.databind.ser.std.EnumSerializer
 import com.lifeomic.fhirlib.v3.resources._
 import com.lifeomic.fhirlib.v3.datatypes._
+import org.joda.time.format.ISODateTimeFormat
 import org.json4s.{CustomSerializer, DefaultFormats, Formats, JNothing, JNull, JString}
 import org.joda.time.{DateTime, DateTimeZone}
 import org.json4s._
@@ -12,7 +15,13 @@ import org.json4s.jackson.Serialization.{read, write}
 case object DateTimeSerializer extends CustomSerializer[DateTime](format => (
     {
         case JString(s) => {
-            new DateTime(s)
+            try {
+                val parser = ISODateTimeFormat.dateTimeParser().withOffsetParsed()
+                parser.parseDateTime(s)
+            } catch {
+                case _ : Throwable => null
+            }
+
         }
         case _ => null
     },
@@ -39,7 +48,7 @@ object ResourceSerializer extends Serializer[Resource] {
                 case "Medication" => json.extract[Medication]
                 case _ => new Resource(resourceType, None, None, None, None, None)
             }
-            case _ => throw new MappingException("Unsupported resourceType")
+            case _ => throw new MappingException("This resource does not have a resourceType")
         }
     }
 

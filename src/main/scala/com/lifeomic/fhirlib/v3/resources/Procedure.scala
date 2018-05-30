@@ -10,11 +10,11 @@ object ProcedureStatus extends Enumeration {
 import ProcedureStatus._
 
 class ProcedurePerformer(val role: Option[CodeableConcept],
-                         val actor: Reference,
+                         val actor: Option[Reference],
                          val onBehalfOf: Option[Reference])
 
 class FocalDevice(val action: Option[CodeableConcept],
-                  val manipulated: Reference)
+                  val manipulated: Option[Reference])
 
 class Procedure(override val id: Option[String],
                 override val contained: Option[List[Resource]],
@@ -24,12 +24,12 @@ class Procedure(override val id: Option[String],
                 val definition: Option[List[Reference]],
                 val basedOn: Option[List[Reference]],
                 val partOf: Option[List[Reference]],
-                val status: String,
+                val status: Option[String],
                 val notDone: Option[Boolean],
                 val notDoneReason: Option[CodeableConcept],
                 val category: Option[CodeableConcept],
                 val code: Option[CodeableConcept],
-                val subject: Reference,
+                val subject: Option[Reference],
                 val context: Option[Reference],
                 val performedDateTime: Option[DateTime],
                 val performer: Option[ProcedurePerformer],

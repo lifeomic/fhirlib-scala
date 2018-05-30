@@ -11,7 +11,7 @@ class Schedule(override val id: Option[String],
                val serviceCategory: Option[CodeableConcept],
                val serviceType: Option[List[CodeableConcept]],
                val specialty: Option[List[CodeableConcept]],
-               val actor: List[Reference],
+               val actor: Option[List[Reference]],
                val planningHorizon: Option[Period],
                val comment: Option[String]) extends Resource("Schedule", id, contained, meta, extension, identifier) {
 }

@@ -4,7 +4,7 @@
 
     <groupId>com.lifeomic</groupId>
     <artifactId>fhirlib</artifactId>
-    <version>0.2.9</version>
+    <version>0.3.2</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -111,14 +111,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <skipTests>true</skipTests>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.scalatest</groupId>

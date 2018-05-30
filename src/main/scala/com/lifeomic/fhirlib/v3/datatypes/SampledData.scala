@@ -5,7 +5,7 @@ class SampledData(val origin: Quantity,
                   val factor: Option[Double],
                   val lowerLimit: Option[Double],
                   val upperLimit: Option[Double],
-                  val dimensions: String,
-                  val data: String) {
+                  val dimensions: Option[String],
+                  val data: Option[String]) {
 
 }

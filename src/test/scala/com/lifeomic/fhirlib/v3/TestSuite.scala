@@ -50,7 +50,7 @@ class TestSuite extends FunSuite {
         assert(resource.id.get == "example")
         assert(resource.clinicalStatus.get.toString == ClinicalStatus.active.toString)
         assert(resource.verificationStatus.get == "confirmed")
-        assert(resource.subject.reference.get.getPath == "Patient/example")
+        assert(resource.subject.get.reference.get.getPath == "Patient/example")
         assert(resource.onsetDateTime.get.year().get() == 2012)
     }
 
@@ -66,6 +66,6 @@ class TestSuite extends FunSuite {
         val med = resource.getContained(resource.medicationReference.get.reference.get.getFragment)
         assert(med.get.id.get == "med0301")
         assert(resource.medicationReference.get.getId().get == "med0301")
-        assert(resource.status == "in-progress")
+        assert(resource.status.get == "in-progress")
     }
 }
