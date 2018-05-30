@@ -35,20 +35,25 @@ object ResourceSerializer extends Serializer[Resource] {
 
     def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), Resource] = {
         case (TypeInfo(ParentClass, _), json) => json match {
-            case JObject(JField("resourceType", JString(resourceType)) :: _) => resourceType match {
-                case "Condition" => json.extract[Condition]
-                case "MedicationAdministration" => json.extract[MedicationAdministration]
-                case "MedicationRequest" => json.extract[MedicationRequest]
-                case "MedicationStatement" => json.extract[MedicationStatement]
-                case "Observation" => json.extract[Observation]
-                case "Patient" => json.extract[Patient]
-                case "Procedure" => json.extract[Procedure]
-                case "Schedule" => json.extract[Schedule]
-                case "Specimen" => json.extract[Specimen]
-                case "Medication" => json.extract[Medication]
-                case _ => new Resource(resourceType, None, None, None, None, None)
+            case x : JObject => {
+                x.values.get("resourceType").orNull match {
+                    case "Condition" => json.extract[Condition]
+                    case "MedicationAdministration" => json.extract[MedicationAdministration]
+                    case "MedicationRequest" => json.extract[MedicationRequest]
+                    case "MedicationStatement" => json.extract[MedicationStatement]
+                    case "Observation" => json.extract[Observation]
+                    case "Patient" => json.extract[Patient]
+                    case "Procedure" => json.extract[Procedure]
+                    case "Schedule" => json.extract[Schedule]
+                    case "Specimen" => json.extract[Specimen]
+                    case "Medication" => json.extract[Medication]
+                    case resourceType : String => new Resource(resourceType, None, None, None, None, None)
+                    case _ => {
+                        throw new MappingException("This resource does not have a resourceType")
+                    }
+                }
             }
-            case _ => throw new MappingException("This resource does not have a resourceType")
+            case _ => throw new MappingException("Invalid resource")
         }
     }
 
