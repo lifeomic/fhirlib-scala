@@ -68,4 +68,33 @@ class TestSuite extends FunSuite {
         assert(resource.medicationReference.get.getId().get == "med0301")
         assert(resource.status.get == "in-progress")
     }
+
+    test("Test MedicationStatement2") {
+        val json = scala.io.Source.fromFile(getClass.getResource("/MedicationStatement2.test.json").getFile).mkString
+        val resource = Deserializer.loadFhirResource(json).asInstanceOf[MedicationStatement]
+
+        assert(resource.id.isEmpty)
+
+        val containedMeds = resource.getContained[Medication]
+        assert(containedMeds.length == 1)
+        val med = resource.getContained(resource.medicationReference.get.getId().get)
+        assert(med.get.id.get == "56bfdc47-a07a-4e07-9c40-baabf30bdfed")
+        assert(resource.status.isEmpty)
+    }
+
+    test("Test Procedure") {
+        val json = scala.io.Source.fromFile(getClass.getResource("/Procedure.test.json").getFile).mkString
+        val resource = Deserializer.loadFhirResource(json).asInstanceOf[Procedure]
+
+        assert(resource.id.get == "example")
+        assert(resource.status.get == "completed")
+        assert(resource.code.get.coding.get.head.system.get.toString == "http://snomed.info/sct")
+        assert(resource.code.get.coding.get.head.code.get == "80146002")
+        assert(resource.code.get.coding.get.head.display.get == "Appendectomy (Procedure)")
+        assert(resource.code.get.text.get == "Appendectomy")
+        assert(resource.subject.get.getId.get == "example")
+        assert(resource.performedDateTime.get.toString("yyyy-MM-dd") == "2013-04-05")
+        assert(resource.performedPeriod.isEmpty)
+        assert(resource.note.get.head.text.get == "Routine Appendectomy. Appendix was inflamed and in retro-caecal position")
+    }
 }

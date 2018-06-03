@@ -1,0 +1,39 @@
+{
+  "resourceType": "MedicationStatement",
+  "effectivePeriod": {
+    "start": "2010-01-24T00:00:00+00:00",
+    "end": "2010-07-02T00:00:00+00:00"
+  },
+  "contained": [
+    {
+      "resourceType": "Medication",
+      "code": {
+        "coding": [
+          {
+            "code": "\"372817009;387420009",
+            "system": "http://snomed.info/sct",
+            "display": "adrimicin+cyclophosphamide"
+          }
+        ]
+      },
+      "id": "56bfdc47-a07a-4e07-9c40-baabf30bdfed"
+    }
+  ],
+  "medicationReference": [
+    {
+      "reference": "56bfdc47-a07a-4e07-9c40-baabf30bdfed"
+    }
+  ],
+  "taken": "y",
+  "subject": {
+    "reference": "Patient/8624354c-af25-423c-9c71-48a5dd821097"
+  },
+  "meta": {
+    "tag": [
+      {
+        "system": "http://lifeomic.com/fhir/dataset",
+        "code": "19e34782-91c4-4143-aaee-2ba81ed0b206"
+      }
+    ]
+  }
+}

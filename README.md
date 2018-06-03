@@ -5,7 +5,7 @@
 <dependency>
   <groupId>com.lifeomic</groupId>
   <artifactId>fhirlib</artifactId>
-  <version>0.3.2</version>
+  <version>0.3.4</version>
 </dependency>
 ```
 
@@ -21,7 +21,7 @@ object Example extends App {
   // Deserialize the json string into a Patient object
   val patient = fhirlib.v3.Deserializer.loadFhirResource(jsonString).asInstanceOf[Patient]
 
-  println(patient.birthDate.get.year().get())
+  println(patient.birthDate.get.year.get)
 }
 ```
 
