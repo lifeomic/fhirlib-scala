@@ -7,7 +7,7 @@ import java.net.URI
 class Attachment(val contentType: Option[String],
                  val language: Option[String],
                  val data: Option[String],
-                 val url: Option[URI],
+                 val url: Option[String],
                  val size: Option[UnsignedInteger],
                  val hash: Option[String],
                  val title: Option[String],

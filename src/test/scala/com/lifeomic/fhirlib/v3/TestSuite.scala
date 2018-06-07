@@ -18,8 +18,9 @@ class TestSuite extends FunSuite {
         assert(patient.birthDate.orNull.year().get()  == 1993)
         assert(patient.birthDate.orNull.monthOfYear().get()  == 5)
         assert(patient.birthDate.orNull.dayOfMonth().get()  == 7)
-        assert(patient.meta.orNull.tag.get.head.system.get.getHost()  == "lifeomic.com")
-        assert(patient.meta.orNull.tag.get.head.system.get.getPath()  == "/fhir/dataset")
+        val uri = new java.net.URI(patient.meta.orNull.tag.get.head.system.get)
+        assert(uri.getHost()  == "lifeomic.com")
+        assert(uri.getPath()  == "/fhir/dataset")
 
         val raceCoding = patient.getRaceCoding().get
         assert(raceCoding.code.get  == "2106-3")
@@ -50,7 +51,7 @@ class TestSuite extends FunSuite {
         assert(resource.id.get == "example")
         assert(resource.clinicalStatus.get.toString == ClinicalStatus.active.toString)
         assert(resource.verificationStatus.get == "confirmed")
-        assert(resource.subject.get.reference.get.getPath == "Patient/example")
+        assert(resource.subject.get.reference.get == "Patient/example")
         assert(resource.onsetDateTime.get.year().get() == 2012)
     }
 
@@ -63,7 +64,7 @@ class TestSuite extends FunSuite {
         val containedMeds = resource.getContained[Medication]
         assert(containedMeds.length == 1)
 
-        val med = resource.getContained(resource.medicationReference.get.reference.get.getFragment)
+        val med = resource.getContained(resource.medicationReference.get.getId.get)
         assert(med.get.id.get == "med0301")
         assert(resource.medicationReference.get.getId().get == "med0301")
         assert(resource.status.get == "in-progress")

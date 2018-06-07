@@ -1,16 +1,13 @@
 package com.lifeomic.fhirlib.v3
 
-import java.time.format.DateTimeFormatter
-
-import com.fasterxml.jackson.databind.ser.std.EnumSerializer
 import com.lifeomic.fhirlib.v3.resources._
 import com.lifeomic.fhirlib.v3.datatypes._
 import org.joda.time.format.ISODateTimeFormat
-import org.json4s.{CustomSerializer, DefaultFormats, Formats, JNothing, JNull, JString}
+import org.json4s.{CustomSerializer, DefaultFormats, Formats, JString}
 import org.joda.time.{DateTime, DateTimeZone}
 import org.json4s._
 import org.json4s.ext.EnumNameSerializer
-import org.json4s.jackson.Serialization.{read, write}
+import org.json4s.jackson.Serialization.{read}
 
 case object DateTimeSerializer extends CustomSerializer[DateTime](format => (
     {
@@ -66,7 +63,6 @@ object Deserializer {
 
         implicit val formats: Formats = DefaultFormats +
             ResourceSerializer +
-            UriSerializer +
             DateTimeSerializer +
             new EnumNameSerializer(ClinicalStatus) +
             new EnumNameSerializer(Gender) +

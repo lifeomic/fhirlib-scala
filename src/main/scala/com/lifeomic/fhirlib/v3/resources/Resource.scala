@@ -15,7 +15,7 @@ class Resource(val resourceType: String,
 
     def getIdentifier(system: String) : Option[String] = {
         try {
-            identifier.get.filter(_.system.get.toString() == system).head.value
+            identifier.get.filter(_.system.getOrElse("") == system).head.value
         } catch {
             case _ : Throwable => None
         }

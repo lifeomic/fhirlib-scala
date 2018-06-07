@@ -2,15 +2,16 @@ package com.lifeomic.fhirlib.v3.datatypes
 
 import java.net.URI
 
-class Reference(val reference: Option[URI],
+class Reference(val reference: Option[String],
                 val identifier: Option[Identifier],
                 val display: Option[String]) {
     def getId(): Option[String] = {
         try {
-            if (reference.get.getFragment != null) {
-                return Some(reference.get.getFragment)
+            val uri = new java.net.URI(reference.get)
+            if (uri.getFragment != null) {
+                return Some(uri.getFragment)
             }
-            reference.get.getPath.split("/").lastOption
+            uri.getPath.split("/").lastOption
         } catch {
             case _ : Throwable => None
         }

@@ -1,8 +1,6 @@
 package com.lifeomic.fhirlib.v3.datatypes
 
-import java.net.URI
-
-class Coding(val system: Option[URI],
+class Coding(val system: Option[String],
              val version: Option[String],
              val code: Option[String],
              val display: Option[String],

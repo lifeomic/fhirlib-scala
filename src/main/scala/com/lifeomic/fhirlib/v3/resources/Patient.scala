@@ -64,9 +64,9 @@ class Patient(override val id: Option[String],
     def getRaceCoding(urlContains: String = "us-core-race",
                       systemContains: String = "Race"): Option[Coding] = {
         try {
-            val ext = extension.get.filter(_.getUrlString() contains urlContains).headOption
+            val ext = extension.get.filter(_.url.getOrElse("") contains urlContains).headOption
             val coding = ext.get.valueCodeableConcept.get.coding.get
-            return coding.filter(x => x.system.nonEmpty && (x.system.get.toString contains systemContains)).headOption
+            return coding.filter(x => x.system.nonEmpty && (x.system.get contains systemContains)).headOption
         } catch {
             case _ : Throwable => None
         }
@@ -75,9 +75,9 @@ class Patient(override val id: Option[String],
     def getEthnicityCoding(urlContains: String = "us-core-ethnicity",
                            systemContains: String = "Ethnicity"): Option[Coding] = {
         try {
-            val ext = extension.get.filter(_.getUrlString() contains urlContains).headOption
+            val ext = extension.get.filter(_.url.getOrElse("") contains urlContains).headOption
             val coding = ext.get.valueCodeableConcept.get.coding.get
-            return coding.filter(x => x.system.nonEmpty && (x.system.get.toString contains systemContains)).headOption
+            return coding.filter(x => x.system.nonEmpty && (x.system.get contains systemContains)).headOption
         } catch {
             case _ : Throwable => None
         }
