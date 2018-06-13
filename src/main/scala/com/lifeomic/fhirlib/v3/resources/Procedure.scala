@@ -1,13 +1,12 @@
 package com.lifeomic.fhirlib.v3.resources
 
-import org.joda.time.DateTime
 import com.lifeomic.fhirlib.v3.datatypes._
+import org.joda.time.DateTime
 
 object ProcedureStatus extends Enumeration {
-    type ProcedureStatus = Value
-    val preparation, `in-progress`, suspended, aborted, completed, `entered-in-error`, unknown = Value
+  type ProcedureStatus = Value
+  val preparation, `in-progress`, suspended, aborted, completed, `entered-in-error`, unknown = Value
 }
-import ProcedureStatus._
 
 class ProcedurePerformer(val role: Option[CodeableConcept],
                          val actor: Option[Reference],

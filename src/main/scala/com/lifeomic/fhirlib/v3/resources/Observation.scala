@@ -1,16 +1,13 @@
 package com.lifeomic.fhirlib.v3.resources
 
 import com.lifeomic.fhirlib.v3.datatypes._
-
 import org.joda.time.{DateTime, LocalTime}
 
 object ObservationStatus extends Enumeration {
-    type ObservationStatus = Value
-    val registered, preliminary, `final`, amended,
-    corrected, cancelled, `entered-in-error`, unknown = Value
+  type ObservationStatus = Value
+  val registered, preliminary, `final`, amended,
+  corrected, cancelled, `entered-in-error`, unknown = Value
 }
-
-import ObservationStatus._
 
 class ReferenceRange(val low: Option[Quantity],
                      val high: Option[Quantity],
@@ -20,12 +17,10 @@ class ReferenceRange(val low: Option[Quantity],
                      val text: Option[String])
 
 object RelatedType extends Enumeration {
-    type RelatedType = Value
-    val `has-member`, `derived-from`, `sequel-to`, replaces,
-    `qualified-by`, `interfered-by` = Value
+  type RelatedType = Value
+  val `has-member`, `derived-from`, `sequel-to`, replaces,
+  `qualified-by`, `interfered-by` = Value
 }
-
-import RelatedType._
 
 class Related(val `type`: Option[String],
               val target: Reference)

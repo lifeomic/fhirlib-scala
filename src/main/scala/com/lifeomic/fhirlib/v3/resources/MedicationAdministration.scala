@@ -1,14 +1,12 @@
 package com.lifeomic.fhirlib.v3.resources
 
-import org.joda.time.DateTime
 import com.lifeomic.fhirlib.v3.datatypes._
+import org.joda.time.DateTime
 
 object MedicationAdministrationStatus extends Enumeration {
-    type MedicationAdministrationStatus = Value
-    val `in-progress`, `on-hold`, completed, `entered-in-error`, stopped, unknown = Value
+  type MedicationAdministrationStatus = Value
+  val `in-progress`, `on-hold`, completed, `entered-in-error`, stopped, unknown = Value
 }
-
-import MedicationAdministrationStatus._
 
 class Performer(val actor: Reference,
                 val onBehalfOf: Option[Reference])

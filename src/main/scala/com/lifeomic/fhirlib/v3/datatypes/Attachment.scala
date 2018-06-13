@@ -2,7 +2,6 @@ package com.lifeomic.fhirlib.v3.datatypes
 
 import com.google.common.primitives.UnsignedInteger
 import org.joda.time.DateTime
-import java.net.URI
 
 class Attachment(val contentType: Option[String],
                  val language: Option[String],

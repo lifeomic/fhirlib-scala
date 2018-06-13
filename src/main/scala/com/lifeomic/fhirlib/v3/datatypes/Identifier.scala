@@ -1,10 +1,9 @@
 package com.lifeomic.fhirlib.v3.datatypes
 
 object Identifier_Use extends Enumeration {
-    type Identifier_Use = Value
-    val usual, official, temp, secondary = Value
+  type Identifier_Use = Value
+  val usual, official, temp, secondary = Value
 }
-import Identifier_Use._
 
 class Identifier(val use: Option[String],
                  val `type`: Option[CodeableConcept],

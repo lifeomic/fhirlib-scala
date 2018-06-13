@@ -1,27 +1,22 @@
 package com.lifeomic.fhirlib.v3.resources
 
-import org.joda.time.DateTime
 import com.lifeomic.fhirlib.v3.datatypes._
+import org.joda.time.DateTime
 
 object MedicationRequestStatus extends Enumeration {
-    type MedicationRequestStatus = Value
-    val active, `on-hold`, cancelled, completed, `entered-in-error`, stopped, draft, unknown = Value
+  type MedicationRequestStatus = Value
+  val active, `on-hold`, cancelled, completed, `entered-in-error`, stopped, draft, unknown = Value
 }
-
-import MedicationRequestStatus._
 
 object MedicationRequestIntent extends Enumeration {
-    type MedicationRequestIntent = Value
-    val proposal, plan, order, `instance-order` = Value
+  type MedicationRequestIntent = Value
+  val proposal, plan, order, `instance-order` = Value
 }
-
-import MedicationRequestIntent._
 
 object MedicationRequestPriority extends Enumeration {
-    type MedicationRequestPriority = Value
-    val routine, urgent, stat, asap = Value
+  type MedicationRequestPriority = Value
+  val routine, urgent, stat, asap = Value
 }
-import MedicationRequestPriority._
 
 class Requester(val agent: Reference,
                 val onBehalfOf: Option[Reference])

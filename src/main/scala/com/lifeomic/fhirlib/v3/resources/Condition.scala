@@ -4,24 +4,21 @@ import com.lifeomic.fhirlib.v3.datatypes._
 import org.joda.time.DateTime
 
 object ClinicalStatus extends Enumeration {
-    type ClinicalStatus = Value
-    val active, recurrence, inactive, remission, resolved = Value
+  type ClinicalStatus = Value
+  val active, recurrence, inactive, remission, resolved = Value
 }
-import ClinicalStatus._
 
 object VerificationStatus extends Enumeration {
-    type VerificationStatus = Value
-    val provisional, differential, confirmed, refuted, `entered-in-error`, unknown = Value
+  type VerificationStatus = Value
+  val provisional, differential, confirmed, refuted, `entered-in-error`, unknown = Value
 }
-
-import VerificationStatus._
 
 class ConditionEvidence(val code: Option[List[CodeableConcept]],
                         val detail: Option[List[Reference]])
 
 class ConditionStage(val summary: Option[CodeableConcept],
-                    val assessment: Option[List[Reference]],
-                    val evidence: Option[List[ConditionEvidence]])
+                     val assessment: Option[List[Reference]],
+                     val evidence: Option[List[ConditionEvidence]])
 
 class Condition(override val id: Option[String],
                 override val contained: Option[List[Resource]],

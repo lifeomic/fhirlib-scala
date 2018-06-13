@@ -4,10 +4,9 @@ import com.lifeomic.fhirlib.v3.datatypes._
 import org.joda.time.DateTime
 
 object MedicationStatus extends Enumeration {
-    type MedicationStatus = Value
-    val active, inactive, `entered-in-error` = Value
+  type MedicationStatus = Value
+  val active, inactive, `entered-in-error` = Value
 }
-import MedicationStatus._
 
 class Ingredient(val itemCodeableConcept: Option[CodeableConcept],
                  val itemReference: Option[Reference],

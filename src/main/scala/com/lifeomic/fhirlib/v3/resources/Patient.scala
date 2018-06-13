@@ -6,10 +6,11 @@ import org.joda.time.{DateTime, Years}
 import scala.collection.mutable.ListBuffer
 
 object Gender extends Enumeration {
-    type Gender = Value
-    val male, female, other, unknown = Value
+  type Gender = Value
+  val male, female, other, unknown = Value
 }
-import Gender._
+
+import com.lifeomic.fhirlib.v3.resources.Gender._
 
 class PatientContact(val relationship: Option[List[CodeableConcept]],
                      val name: Option[HumanName],
@@ -61,56 +62,56 @@ class Patient(override val id: Option[String],
               val managingOrganization: Option[Reference],
               val link: Option[List[Link]]) extends Resource("Patient", id, contained, meta, extension, identifier) {
 
-    def getRaceCoding(urlContains: String = "us-core-race",
-                      systemContains: String = "Race"): Option[Coding] = {
-        try {
-            val ext = extension.get.filter(_.url.getOrElse("") contains urlContains).headOption
-            val coding = ext.get.valueCodeableConcept.get.coding.get
-            return coding.filter(x => x.system.nonEmpty && (x.system.get contains systemContains)).headOption
-        } catch {
-            case _ : Throwable => None
-        }
+  def getRaceCoding(urlContains: String = "us-core-race",
+                    systemContains: String = "Race"): Option[Coding] = {
+    try {
+      val ext = extension.get.filter(_.url.getOrElse("") contains urlContains).headOption
+      val coding = ext.get.valueCodeableConcept.get.coding.get
+      return coding.filter(x => x.system.nonEmpty && (x.system.get contains systemContains)).headOption
+    } catch {
+      case _: Throwable => None
     }
+  }
 
-    def getEthnicityCoding(urlContains: String = "us-core-ethnicity",
-                           systemContains: String = "Ethnicity"): Option[Coding] = {
-        try {
-            val ext = extension.get.filter(_.url.getOrElse("") contains urlContains).headOption
-            val coding = ext.get.valueCodeableConcept.get.coding.get
-            return coding.filter(x => x.system.nonEmpty && (x.system.get contains systemContains)).headOption
-        } catch {
-            case _ : Throwable => None
-        }
+  def getEthnicityCoding(urlContains: String = "us-core-ethnicity",
+                         systemContains: String = "Ethnicity"): Option[Coding] = {
+    try {
+      val ext = extension.get.filter(_.url.getOrElse("") contains urlContains).headOption
+      val coding = ext.get.valueCodeableConcept.get.coding.get
+      return coding.filter(x => x.system.nonEmpty && (x.system.get contains systemContains)).headOption
+    } catch {
+      case _: Throwable => None
     }
+  }
 
-    def getLanguageCodes(): List[String] = {
-        val langs = ListBuffer[String]()
-        if (communication.isEmpty) {
-            return langs.toList
-        }
-        communication.get.foreach(comm => {
-            if (!comm.language.coding.isEmpty) {
-                comm.language.coding.get.foreach(coding => {
-                    if (!coding.code.isEmpty) {
-                        langs += coding.code.get
-                    }
-                })
-            }
+  def getLanguageCodes(): List[String] = {
+    val langs = ListBuffer[String]()
+    if (communication.isEmpty) {
+      return langs.toList
+    }
+    communication.get.foreach(comm => {
+      if (!comm.language.coding.isEmpty) {
+        comm.language.coding.get.foreach(coding => {
+          if (!coding.code.isEmpty) {
+            langs += coding.code.get
+          }
         })
-        return langs.toList
-    }
+      }
+    })
+    return langs.toList
+  }
 
-    def getAddresses(): List[Address] = {
-        if (address.isEmpty) {
-            return List[Address]()
-        }
-        address.get
+  def getAddresses(): List[Address] = {
+    if (address.isEmpty) {
+      return List[Address]()
     }
+    address.get
+  }
 
-    def getAge(): Option[Int] = {
-        if (birthDate.isEmpty) {
-            return None
-        }
-        return Some(Years.yearsBetween(birthDate.get, DateTime.now).getYears)
+  def getAge(): Option[Int] = {
+    if (birthDate.isEmpty) {
+      return None
     }
+    return Some(Years.yearsBetween(birthDate.get, DateTime.now).getYears)
+  }
 }

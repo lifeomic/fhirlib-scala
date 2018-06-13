@@ -1,15 +1,14 @@
 package com.lifeomic.fhirlib.v3.resources
 
-import org.joda.time.DateTime
 import com.lifeomic.fhirlib.v3.datatypes._
+import org.joda.time.DateTime
 
 import scala.collection.mutable.ListBuffer
 
 object Specimen_Status extends Enumeration {
-    type Specimen_Status = Value
-    val available, unavailable, unsatisfactory, `entered-in-error` = Value
+  type Specimen_Status = Value
+  val available, unavailable, unsatisfactory, `entered-in-error` = Value
 }
-import Specimen_Status._
 
 class Collection(val collector: Option[Reference],
                  val collectedDateTime: Option[DateTime],
@@ -50,15 +49,15 @@ class Specimen(override val id: Option[String],
                val note: Option[List[Annotation]]
               ) extends Resource("Specimen", id, contained, meta, extension, identifier) {
 
-    def getTypeCodings(): List[Coding] = {
-        val res = ListBuffer[Coding]()
-        try {
-            this.`type`.get.coding.get.foreach(coding => {
-                res += coding
-            })
-        } catch {
-            case _ : Throwable => res.toList
-        }
-        res.toList
+  def getTypeCodings(): List[Coding] = {
+    val res = ListBuffer[Coding]()
+    try {
+      this.`type`.get.coding.get.foreach(coding => {
+        res += coding
+      })
+    } catch {
+      case _: Throwable => res.toList
     }
+    res.toList
+  }
 }
