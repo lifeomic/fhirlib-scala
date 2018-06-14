@@ -64,41 +64,34 @@ class Patient(override val id: Option[String],
 
   def getRaceCoding(urlContains: String = "us-core-race",
                     systemContains: String = "Race"): Option[Coding] = {
-    try {
-      val ext = extension.get.filter(_.url.getOrElse("") contains urlContains).headOption
-      val coding = ext.get.valueCodeableConcept.get.coding.get
-      return coding.filter(x => x.system.nonEmpty && (x.system.get contains systemContains)).headOption
-    } catch {
-      case _: Throwable => None
-    }
+    getExtensionCoding(urlContains, Some(systemContains))
   }
 
   def getEthnicityCoding(urlContains: String = "us-core-ethnicity",
                          systemContains: String = "Ethnicity"): Option[Coding] = {
-    try {
-      val ext = extension.get.filter(_.url.getOrElse("") contains urlContains).headOption
-      val coding = ext.get.valueCodeableConcept.get.coding.get
-      return coding.filter(x => x.system.nonEmpty && (x.system.get contains systemContains)).headOption
-    } catch {
-      case _: Throwable => None
-    }
+    getExtensionCoding(urlContains, Some(systemContains))
   }
 
-  def getLanguageCodes(): List[String] = {
-    val langs = ListBuffer[String]()
+  def getLanguageCodings(): List[Coding] = {
     if (communication.isEmpty) {
-      return langs.toList
+      return List[Coding]()
     }
+
+    val codings = ListBuffer[Coding]()
     communication.get.foreach(comm => {
-      if (!comm.language.coding.isEmpty) {
+      if (comm.language.coding.nonEmpty) {
         comm.language.coding.get.foreach(coding => {
           if (!coding.code.isEmpty) {
-            langs += coding.code.get
+            codings += coding
           }
         })
       }
     })
-    return langs.toList
+    return codings.toList
+  }
+
+  def getLanguageCodes(): List[String] = {
+    return getLanguageCodings().map(_.code.get)
   }
 
   def getAddresses(): List[Address] = {
@@ -113,5 +106,20 @@ class Patient(override val id: Option[String],
       return None
     }
     return Some(Years.yearsBetween(birthDate.get, DateTime.now).getYears)
+  }
+
+  private def getExtensionCoding(urlContains: String, systemContainsOpt: Option[String]): Option[Coding] = {
+    try {
+      val ext = extension.get.filter(_.url.getOrElse("") contains urlContains).headOption
+      val coding = ext.get.valueCodeableConcept.get.coding.get
+      systemContainsOpt match {
+        case Some(systemContains) =>
+          coding.filter(x => x.system.nonEmpty && (x.system.get contains systemContains)).headOption
+        case None =>
+          coding.headOption
+      }
+    } catch {
+      case _: Throwable => None
+    }
   }
 }

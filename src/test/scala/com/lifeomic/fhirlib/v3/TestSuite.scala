@@ -32,6 +32,20 @@ class TestSuite extends FunSuite {
 
     assert(patient.getAddresses().head.getLatitude().get == 42.183400380260686)
     assert(patient.getAddresses().head.getLongitude().get == -72.46253600130517)
+
+    val languageCodes = patient.getLanguageCodes()
+    assert(languageCodes.length == 1)
+    assert(languageCodes.head == "en-US")
+
+    val languageCodings = patient.getLanguageCodings()
+    assert(languageCodings.length == 1)
+
+    val languageCoding = languageCodings.head
+    assert(languageCoding.system.get == "http://hl7.org/fhir/ValueSet/languages")
+    assert(languageCoding.version.isEmpty)
+    assert(languageCoding.code.get == "en-US")
+    assert(languageCoding.display.get == "English (United States)")
+    assert(languageCoding.userSelected.isEmpty)
   }
 
   test("Test Specimen") {

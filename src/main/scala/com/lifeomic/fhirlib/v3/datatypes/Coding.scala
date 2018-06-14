@@ -6,3 +6,4 @@ class Coding(val system: Option[String],
              val display: Option[String],
              val userSelected: Option[Boolean]) {
 }
+`
