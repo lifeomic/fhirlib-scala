@@ -81,17 +81,17 @@ class Patient(override val id: Option[String],
     communication.get.foreach(comm => {
       if (comm.language.coding.nonEmpty) {
         comm.language.coding.get.foreach(coding => {
-          if (!coding.code.isEmpty) {
+          if (coding.code.nonEmpty) {
             codings += coding
           }
         })
       }
     })
-    return codings.toList
+    codings.toList
   }
 
   def getLanguageCodes(): List[String] = {
-    return getLanguageCodings().map(_.code.get)
+    getLanguageCodings().map(_.code.get)
   }
 
   def getAddresses(): List[Address] = {
