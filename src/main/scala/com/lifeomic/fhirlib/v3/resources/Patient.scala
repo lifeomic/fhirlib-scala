@@ -107,19 +107,4 @@ class Patient(override val id: Option[String],
     }
     return Some(Years.yearsBetween(birthDate.get, DateTime.now).getYears)
   }
-
-  private def getExtensionCoding(urlContains: String, systemContainsOpt: Option[String]): Option[Coding] = {
-    try {
-      val ext = extension.get.filter(_.url.getOrElse("") contains urlContains).headOption
-      val coding = ext.get.valueCodeableConcept.get.coding.get
-      systemContainsOpt match {
-        case Some(systemContains) =>
-          coding.filter(x => x.system.nonEmpty && (x.system.get contains systemContains)).headOption
-        case None =>
-          coding.headOption
-      }
-    } catch {
-      case _: Throwable => None
-    }
-  }
 }
