@@ -11,41 +11,11 @@ class TestSuite extends FunSuite {
   implicit val doubleEq = TolerantNumerics.tolerantDoubleEquality(1e-8)
 
   test("Test Patient") {
-    val json = scala.io.Source.fromFile(getClass.getResource("/Patient.test.json").getFile).mkString
-    val patient = Deserializer.loadFhirResource(json).asInstanceOf[Patient]
+    testPatient("/Patient.test.json")
+  }
 
-    assert(patient.gender.orNull == Gender.female)
-    assert(patient.birthDate.orNull.year().get() == 1993)
-    assert(patient.birthDate.orNull.monthOfYear().get() == 5)
-    assert(patient.birthDate.orNull.dayOfMonth().get() == 7)
-    val uri = new java.net.URI(patient.meta.orNull.tag.get.head.system.get)
-    assert(uri.getHost() == "lifeomic.com")
-    assert(uri.getPath() == "/fhir/dataset")
-
-    val raceCoding = patient.getRaceCoding().get
-    assert(raceCoding.code.get == "2106-3")
-    assert(raceCoding.display.get == "White")
-    assert(patient.getEthnicityCoding().get.code.get == "2186-5")
-    assert(patient.getEthnicityCoding().get.display.get == "Nonhispanic")
-    assert(patient.getAge().get >= 25)
-    assert(patient.getLanguageCodes().head == "en-US")
-
-    assert(patient.getAddresses().head.getLatitude().get == 42.183400380260686)
-    assert(patient.getAddresses().head.getLongitude().get == -72.46253600130517)
-
-    val languageCodes = patient.getLanguageCodes()
-    assert(languageCodes.length == 1)
-    assert(languageCodes.head == "en-US")
-
-    val languageCodings = patient.getLanguageCodings()
-    assert(languageCodings.length == 1)
-
-    val languageCoding = languageCodings.head
-    assert(languageCoding.system.get == "http://hl7.org/fhir/ValueSet/languages")
-    assert(languageCoding.version.isEmpty)
-    assert(languageCoding.code.get == "en-US")
-    assert(languageCoding.display.get == "English (United States)")
-    assert(languageCoding.userSelected.isEmpty)
+  test("Test Patient with different race and ethnicity system") {
+    testPatient("/PatientUri.test.json")
   }
 
   test("Test Specimen") {
@@ -149,5 +119,44 @@ class TestSuite extends FunSuite {
     assert(resource.repository.get.head.`type`.get == "login")
     assert(resource.repository.get.head.url.get == "https://precision.fda.gov/comparisons/1850")
     assert(resource.repository.get.head.name.get == "FDA")
+  }
+
+
+  def testPatient(res: String) = {
+    val json = scala.io.Source.fromFile(getClass.getResource(res).getFile).mkString
+    val patient = Deserializer.loadFhirResource(json).asInstanceOf[Patient]
+
+    assert(patient.gender.orNull == Gender.female)
+    assert(patient.birthDate.orNull.year().get() == 1993)
+    assert(patient.birthDate.orNull.monthOfYear().get() == 5)
+    assert(patient.birthDate.orNull.dayOfMonth().get() == 7)
+    val uri = new java.net.URI(patient.meta.orNull.tag.get.head.system.get)
+    assert(uri.getHost() == "lifeomic.com")
+    assert(uri.getPath() == "/fhir/dataset")
+
+    val raceCoding = patient.getRaceCoding().get
+    assert(raceCoding.code.get == "2106-3")
+    assert(raceCoding.display.get == "White")
+    assert(patient.getEthnicityCoding().get.code.get == "2186-5")
+    assert(patient.getEthnicityCoding().get.display.get == "Nonhispanic")
+    assert(patient.getAge().get >= 25)
+    assert(patient.getLanguageCodes().head == "en-US")
+
+    assert(patient.getAddresses().head.getLatitude().get == 42.183400380260686)
+    assert(patient.getAddresses().head.getLongitude().get == -72.46253600130517)
+
+    val languageCodes = patient.getLanguageCodes()
+    assert(languageCodes.length == 1)
+    assert(languageCodes.head == "en-US")
+
+    val languageCodings = patient.getLanguageCodings()
+    assert(languageCodings.length == 1)
+
+    val languageCoding = languageCodings.head
+    assert(languageCoding.system.get == "http://hl7.org/fhir/ValueSet/languages")
+    assert(languageCoding.version.isEmpty)
+    assert(languageCoding.code.get == "en-US")
+    assert(languageCoding.display.get == "English (United States)")
+    assert(languageCoding.userSelected.isEmpty)
   }
 }

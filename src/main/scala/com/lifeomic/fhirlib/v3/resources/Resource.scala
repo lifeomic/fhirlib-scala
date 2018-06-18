@@ -39,13 +39,13 @@ class Resource(val resourceType: String,
     }
   }
 
-  protected def getExtensionCoding(urlContains: String, systemContainsOpt: Option[String]): Option[Coding] = {
+  protected def getExtensionCoding(urlContains: String, systemContainsOpts: Option[List[String]]): Option[Coding] = {
     try {
-      val ext = extension.get.filter(_.url.getOrElse("") contains urlContains).headOption
+      val ext = extension.get.find(_.url.getOrElse("") contains urlContains)
       val coding = ext.get.valueCodeableConcept.get.coding.get
-      systemContainsOpt match {
+      systemContainsOpts match {
         case Some(systemContains) =>
-          coding.filter(x => x.system.nonEmpty && (x.system.get contains systemContains)).headOption
+          coding.find(x => x.system.nonEmpty && systemContains.exists(x.system.get contains _))
         case None =>
           coding.headOption
       }

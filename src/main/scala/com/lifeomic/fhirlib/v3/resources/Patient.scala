@@ -35,7 +35,6 @@ class Communication(val language: CodeableConcept,
 
 class Link(val other: Option[Reference],
            val `type`: String) {
-
 }
 
 class Patient(override val id: Option[String],
@@ -62,14 +61,16 @@ class Patient(override val id: Option[String],
               val managingOrganization: Option[Reference],
               val link: Option[List[Link]]) extends Resource("Patient", id, contained, meta, extension, identifier) {
 
+  val raceEthnicitySystem = "2.16.840.1.113883.6.238"
+
   def getRaceCoding(urlContains: String = "us-core-race",
                     systemContains: String = "Race"): Option[Coding] = {
-    getExtensionCoding(urlContains, Some(systemContains))
+    getExtensionCoding(urlContains, Some(List(systemContains, raceEthnicitySystem)))
   }
 
   def getEthnicityCoding(urlContains: String = "us-core-ethnicity",
                          systemContains: String = "Ethnicity"): Option[Coding] = {
-    getExtensionCoding(urlContains, Some(systemContains))
+    getExtensionCoding(urlContains, Some(List(systemContains, raceEthnicitySystem)))
   }
 
   def getLanguageCodings(): List[Coding] = {
