@@ -8,9 +8,6 @@ import java.util.regex.Pattern
 
 object DateUtils {
 
-  // The server time zone should always be UTC
-  TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
-
   private val regex = "(\\d{4}(-\\d{2}(-\\d{2}(T\\d{2}(:\\d{2}(:\\d{2}(Z|-\\d{2}:\\d{2})?)?)?)?)?)?)"
 
   private val formatters: Array[DateTimeFormatter] = Array(
@@ -90,7 +87,6 @@ object DateUtils {
 
     val formatter: DateTimeFormatter = formatters(i - 1)
 
-    println(LocalDateTime.parse(s, formatter))
     Some(LocalDateTime.parse(s, formatter))
   }
 
