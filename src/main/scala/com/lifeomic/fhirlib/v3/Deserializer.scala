@@ -1,9 +1,10 @@
 package com.lifeomic.fhirlib.v3
 
+import java.time.ZoneId
+
 import com.lifeomic.fhirlib.v3.datatypes._
 import com.lifeomic.fhirlib.v3.resources.{Resource, _}
-import org.joda.time.format.ISODateTimeFormat
-import org.joda.time.{DateTime, DateTimeZone}
+import org.joda.time.{DateTime, DateTimeZone, LocalDateTime}
 import org.json4s.ext.EnumNameSerializer
 import org.json4s.jackson.Serialization.read
 import org.json4s.{CustomSerializer, DefaultFormats, Formats, JString, _}
@@ -11,12 +12,10 @@ import org.json4s.{CustomSerializer, DefaultFormats, Formats, JString, _}
 case object DateTimeSerializer extends CustomSerializer[DateTime](format => ( {
   case JString(s) => {
     try {
-      val parser = ISODateTimeFormat.dateTimeParser().withOffsetParsed()
-      parser.parseDateTime(s)
+      DateUtils.parseLocalDateTime(s).map(d => new LocalDateTime(d.atZone(ZoneId.systemDefault()).toInstant.toEpochMilli).toDateTime).orNull
     } catch {
       case _: Throwable => null
     }
-
   }
   case _ => null
 }, {
