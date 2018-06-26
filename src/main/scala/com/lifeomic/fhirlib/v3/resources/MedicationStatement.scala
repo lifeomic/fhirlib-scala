@@ -1,7 +1,8 @@
 package com.lifeomic.fhirlib.v3.resources
 
+import java.time.LocalDateTime
+
 import com.lifeomic.fhirlib.v3.datatypes._
-import org.joda.time.DateTime
 
 object MedicationStatementStatus extends Enumeration {
   type MedicationStatementStatus = Value
@@ -27,9 +28,9 @@ class MedicationStatement(override val id: Option[String],
                           val category: Option[CodeableConcept],
                           val medicationCodeableConcept: Option[CodeableConcept],
                           val medicationReference: Option[Reference],
-                          val effectiveDateTime: Option[DateTime],
+                          val effectiveDateTime: Option[LocalDateTime],
                           val effectivePeriod: Option[Period],
-                          val dateAsserted: Option[DateTime],
+                          val dateAsserted: Option[LocalDateTime],
                           val informationSource: Option[Reference],
                           val subject: Option[Reference],
                           val derivedFrom: Option[List[Reference]],

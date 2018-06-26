@@ -1,7 +1,8 @@
 package com.lifeomic.fhirlib.v3.resources
 
+import java.time.LocalDateTime
+
 import com.lifeomic.fhirlib.v3.datatypes._
-import org.joda.time.DateTime
 
 object ClinicalStatus extends Enumeration {
   type ClinicalStatus = Value
@@ -33,17 +34,17 @@ class Condition(override val id: Option[String],
                 val bodySite: Option[List[CodeableConcept]],
                 val subject: Option[Reference],
                 val context: Option[Reference],
-                val onsetDateTime: Option[DateTime],
-                val onsetDate: Option[DateTime],
+                val onsetDateTime: Option[LocalDateTime],
+                val onsetDate: Option[LocalDateTime],
                 val onsetPeriod: Option[Period],
                 val onsetRange: Option[Range],
                 val onsetString: Option[String],
-                val abatementDateTime: Option[DateTime],
+                val abatementDateTime: Option[LocalDateTime],
                 val abatementAge: Option[Quantity],
                 val abatementBoolean: Option[Boolean],
                 val abatementRange: Option[Range],
                 val abatementString: Option[String],
-                val assertedDate: Option[DateTime],
+                val assertedDate: Option[LocalDateTime],
                 val asserter: Option[Reference],
                 val stage: Option[ConditionStage],
                 val evidence: Option[List[ConditionEvidence]],

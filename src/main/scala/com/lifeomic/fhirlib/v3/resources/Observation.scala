@@ -1,7 +1,8 @@
 package com.lifeomic.fhirlib.v3.resources
 
+import java.time.{LocalDateTime, LocalTime}
+
 import com.lifeomic.fhirlib.v3.datatypes._
-import org.joda.time.{DateTime, LocalTime}
 
 object ObservationStatus extends Enumeration {
   type ObservationStatus = Value
@@ -34,7 +35,7 @@ class ObservationComponent(val code: CodeableConcept,
                            val valueSampledData: Option[SampledData],
                            val valueAttachment: Option[Attachment],
                            val valueTime: Option[LocalTime],
-                           val valueDateTime: Option[DateTime],
+                           val valueDateTime: Option[LocalDateTime],
                            val valuePeriod: Option[Period],
                            val dataAbsentReason: Option[CodeableConcept],
                            val interpretation: Option[CodeableConcept],
@@ -51,9 +52,9 @@ class Observation(override val id: Option[String],
                   val code: CodeableConcept,
                   val subject: Option[Reference],
                   val context: Option[Reference],
-                  val effectiveDateTime: Option[DateTime],
+                  val effectiveDateTime: Option[LocalDateTime],
                   val effectivePeriod: Option[Period],
-                  val issued: Option[DateTime],
+                  val issued: Option[LocalDateTime],
                   val performer: Option[List[Reference]],
                   val valueQuantity: Option[Quantity],
                   val valueCodeableConcept: Option[CodeableConcept],
@@ -64,7 +65,7 @@ class Observation(override val id: Option[String],
                   val valueSampledData: Option[SampledData],
                   val valueAttachment: Option[Attachment],
                   val valueTime: Option[LocalTime],
-                  val valueDateTime: Option[DateTime],
+                  val valueDateTime: Option[LocalDateTime],
                   val valuePeriod: Option[Period],
                   val dataAbsentReason: Option[CodeableConcept],
                   val interpretation: Option[CodeableConcept],

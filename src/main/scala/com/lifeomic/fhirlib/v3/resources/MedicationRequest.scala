@@ -1,7 +1,8 @@
 package com.lifeomic.fhirlib.v3.resources
 
+import java.time.LocalDateTime
+
 import com.lifeomic.fhirlib.v3.datatypes._
-import org.joda.time.DateTime
 
 object MedicationRequestStatus extends Enumeration {
   type MedicationRequestStatus = Value
@@ -48,7 +49,7 @@ class MedicationRequest(override val id: Option[String],
                         val subject: Option[Reference],
                         val context: Option[Reference],
                         val supportingInformation: Option[Reference],
-                        val authoredOn: Option[DateTime],
+                        val authoredOn: Option[LocalDateTime],
                         val requester: Option[Requester],
                         val recorder: Option[Reference],
                         val reasonCode: Option[List[CodeableConcept]],

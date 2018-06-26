@@ -1,7 +1,8 @@
 package com.lifeomic.fhirlib.v3.resources
 
+import java.time.LocalDateTime
+
 import com.lifeomic.fhirlib.v3.datatypes._
-import org.joda.time.DateTime
 
 object MedicationStatus extends Enumeration {
   type MedicationStatus = Value
@@ -18,7 +19,7 @@ class PackageContent(val itemCodeableConcept: Option[CodeableConcept],
                      val amount: Option[Quantity])
 
 class PackageBatch(val lotNumber: Option[String],
-                   val expirationDate: Option[DateTime])
+                   val expirationDate: Option[LocalDateTime])
 
 class MedicationPackage(val container: Option[CodeableConcept],
                         val content: Option[List[PackageContent]],

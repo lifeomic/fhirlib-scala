@@ -2,17 +2,17 @@ package com.lifeomic.fhirlib.v3.datatypes
 
 
 import java.net.URI
+import java.time.LocalDateTime
 
 import com.lifeomic.fhirlib.v3.resources.Schedule
-import org.joda.time.DateTime
 
 class Extension(val url: Option[String],
                 val extension: Option[List[Extension]],
                 val valueInteger: Option[Int],
                 val valueDecimal: Option[Double],
-                val valueDateTime: Option[DateTime],
-                val valueDate: Option[DateTime],
-                val valueInstant: Option[DateTime],
+                val valueDateTime: Option[LocalDateTime],
+                val valueDate: Option[LocalDateTime],
+                val valueInstant: Option[LocalDateTime],
                 val valueString: Option[String],
                 val valueUri: Option[URI],
                 val valueBoolean: Option[Boolean],

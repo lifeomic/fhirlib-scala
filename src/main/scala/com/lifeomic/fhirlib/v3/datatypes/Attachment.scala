@@ -1,7 +1,8 @@
 package com.lifeomic.fhirlib.v3.datatypes
 
+import java.time.LocalDateTime
+
 import com.google.common.primitives.UnsignedInteger
-import org.joda.time.DateTime
 
 class Attachment(val contentType: Option[String],
                  val language: Option[String],
@@ -10,6 +11,6 @@ class Attachment(val contentType: Option[String],
                  val size: Option[UnsignedInteger],
                  val hash: Option[String],
                  val title: Option[String],
-                 val creation: Option[DateTime]) {
+                 val creation: Option[LocalDateTime]) {
 
 }

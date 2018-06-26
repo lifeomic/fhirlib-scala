@@ -1,7 +1,8 @@
 package com.lifeomic.fhirlib.v3.resources
 
+import java.time.LocalDateTime
+
 import com.lifeomic.fhirlib.v3.datatypes._
-import org.joda.time.DateTime
 
 import scala.collection.mutable.ListBuffer
 
@@ -11,7 +12,7 @@ object Specimen_Status extends Enumeration {
 }
 
 class Collection(val collector: Option[Reference],
-                 val collectedDateTime: Option[DateTime],
+                 val collectedDateTime: Option[LocalDateTime],
                  val collectedPeriod: Option[Period],
                  val quantity: Option[Quantity],
                  val method: Option[CodeableConcept],
@@ -20,7 +21,7 @@ class Collection(val collector: Option[Reference],
 class Processing(val description: Option[String],
                  val procedure: Option[CodeableConcept],
                  val additive: Option[List[Reference]],
-                 val timeDateTime: Option[DateTime],
+                 val timeDateTime: Option[LocalDateTime],
                  val timePeriod: Option[Period])
 
 class Container(val identifier: Option[List[Identifier]],
@@ -40,7 +41,7 @@ class Specimen(override val id: Option[String],
                val status: Option[String],
                val `type`: Option[CodeableConcept],
                val subject: Option[Reference],
-               val receivedTime: Option[DateTime],
+               val receivedTime: Option[LocalDateTime],
                val parent: Option[List[Reference]],
                val request: Option[List[Reference]],
                val collection: Option[Collection],

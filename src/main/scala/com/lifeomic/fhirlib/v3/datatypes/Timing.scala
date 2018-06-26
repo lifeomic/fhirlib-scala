@@ -1,11 +1,11 @@
 package com.lifeomic.fhirlib.v3.datatypes
 
-import org.joda.time.{DateTime, LocalTime}
-
 object DayOfWeek extends Enumeration {
   type DayOfWeek = Value
   val mon, tue, wed, thu, fri, sat, sun = Value
 }
+
+import java.time.{LocalDateTime, LocalTime}
 
 import com.lifeomic.fhirlib.v3.datatypes.DayOfWeek._
 
@@ -34,7 +34,7 @@ class TimingRepeat(val boundsDuration: Option[Quantity],
                    val when: Option[List[String]],
                    val offset: Option[String])
 
-class Timing(val event: Option[List[DateTime]],
+class Timing(val event: Option[List[LocalDateTime]],
              val repeat: Option[TimingRepeat],
              val code: Option[CodeableConcept]) {
 
