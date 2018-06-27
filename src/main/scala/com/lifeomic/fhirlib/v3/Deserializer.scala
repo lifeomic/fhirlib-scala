@@ -1,7 +1,7 @@
 package com.lifeomic.fhirlib.v3
 
 import java.time.format.DateTimeFormatter
-import java.time.{LocalDateTime}
+import java.time.{LocalDateTime, ZoneId, ZonedDateTime}
 
 import com.lifeomic.fhirlib.v3.datatypes._
 import com.lifeomic.fhirlib.v3.resources.{Resource, _}
@@ -19,7 +19,7 @@ case object DateTimeSerializer extends CustomSerializer[LocalDateTime](format =>
   }
   case _ => null
 }, {
-  case d: LocalDateTime => JString(d.format(DateTimeFormatter.ISO_DATE_TIME))
+  case d: LocalDateTime => JString(ZonedDateTime.of(d, ZoneId.of("UTC")).format(DateTimeFormatter.ISO_DATE_TIME))
 }
 ))
 

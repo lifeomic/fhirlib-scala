@@ -1,14 +1,13 @@
 package com.lifeomic.fhirlib.v3
 
-import java.time.LocalDateTime
+import java.time.{LocalDateTime, ZoneId, ZonedDateTime}
 import java.time.format.{DateTimeFormatter, DateTimeFormatterBuilder}
 import java.time.temporal.ChronoField
-import java.util.TimeZone
 import java.util.regex.Pattern
 
 object DateUtils {
 
-  private val regex = "(\\d{4}(-\\d{2}(-\\d{2}(T\\d{2}(:\\d{2}(:\\d{2}(Z|-\\d{2}:\\d{2})?)?)?)?)?)?)"
+  private val regex = "(\\d{4}(-\\d{2}(-\\d{2}(T\\d{2}(:\\d{2}(:\\d{2}(Z|[\\+|\\-]\\d{2}:\\d{2})?)?)?)?)?)?)"
 
   private val formatters: Array[DateTimeFormatter] = Array(
 
@@ -60,6 +59,8 @@ object DateUtils {
   /**
     * Parses a string into a local date time object.
     *
+    * Any date times will be stored in UTC.
+    *
     * This method follows the specification for the FHIR date time object. See
     * https://www.hl7.org/fhir/datatypes.html#dateTime
     *
@@ -87,7 +88,11 @@ object DateUtils {
 
     val formatter: DateTimeFormatter = formatters(i - 1)
 
-    Some(LocalDateTime.parse(s, formatter))
+    if (i < 7) {
+      Some(LocalDateTime.parse(s, formatter))
+    } else {
+      Some(ZonedDateTime.parse(s, formatter).withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime)
+    }
   }
 
 }
