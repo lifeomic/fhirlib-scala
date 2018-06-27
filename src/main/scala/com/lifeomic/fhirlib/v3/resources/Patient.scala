@@ -1,7 +1,9 @@
 package com.lifeomic.fhirlib.v3.resources
 
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
+
 import com.lifeomic.fhirlib.v3.datatypes._
-import org.joda.time.{DateTime, Years}
 
 import scala.collection.mutable.ListBuffer
 
@@ -46,9 +48,9 @@ class Patient(override val id: Option[String],
               val name: Option[List[HumanName]],
               val telecom: Option[List[ContactPoint]],
               val gender: Option[Gender],
-              val birthDate: Option[DateTime],
+              val birthDate: Option[LocalDateTime],
               val deceasedBoolean: Option[Boolean],
-              val deceasedDateTime: Option[DateTime],
+              val deceasedDateTime: Option[LocalDateTime],
               val address: Option[List[Address]],
               val maritalStatus: Option[CodeableConcept],
               val multipleBirthsBoolean: Option[Boolean],
@@ -106,6 +108,6 @@ class Patient(override val id: Option[String],
     if (birthDate.isEmpty) {
       return None
     }
-    return Some(Years.yearsBetween(birthDate.get, DateTime.now).getYears)
+    return Some(ChronoUnit.YEARS.between(birthDate.get, LocalDateTime.now).toInt)
   }
 }

@@ -1,26 +1,25 @@
 package com.lifeomic.fhirlib.v3
 
+import java.time.format.DateTimeFormatter
+import java.time.{LocalDateTime, ZoneId, ZonedDateTime}
+
 import com.lifeomic.fhirlib.v3.datatypes._
 import com.lifeomic.fhirlib.v3.resources.{Resource, _}
-import org.joda.time.format.ISODateTimeFormat
-import org.joda.time.{DateTime, DateTimeZone}
 import org.json4s.ext.EnumNameSerializer
 import org.json4s.jackson.Serialization.read
 import org.json4s.{CustomSerializer, DefaultFormats, Formats, JString, _}
 
-case object DateTimeSerializer extends CustomSerializer[DateTime](format => ( {
+case object DateTimeSerializer extends CustomSerializer[LocalDateTime](format => ( {
   case JString(s) => {
     try {
-      val parser = ISODateTimeFormat.dateTimeParser().withOffsetParsed()
-      parser.parseDateTime(s)
+      DateUtils.parseLocalDateTime(s).orNull
     } catch {
       case _: Throwable => null
     }
-
   }
   case _ => null
 }, {
-  case d: DateTime => JString(format.dateFormat.format(d.toDate))
+  case d: LocalDateTime => JString(ZonedDateTime.of(d, ZoneId.of("UTC")).format(DateTimeFormatter.ISO_DATE_TIME))
 }
 ))
 
@@ -59,7 +58,6 @@ object ResourceSerializer extends Serializer[Resource] {
 
 object Deserializer {
   def loadFhirResource(jsonString: String): Resource = {
-    DateTimeZone.setDefault(DateTimeZone.UTC);
 
     implicit val formats: Formats = DefaultFormats +
       ResourceSerializer +

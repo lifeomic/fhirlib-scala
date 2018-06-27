@@ -1,6 +1,9 @@
 package com.lifeomic.fhirlib.v3
 
+import java.time.format.DateTimeFormatter
+
 import com.lifeomic.fhirlib.v3.resources._
+import org.junit.Assert
 import org.junit.runner.RunWith
 import org.scalactic.TolerantNumerics
 import org.scalatest.FunSuite
@@ -36,7 +39,7 @@ class TestSuite extends FunSuite {
     assert(resource.clinicalStatus.get.toString == ClinicalStatus.active.toString)
     assert(resource.verificationStatus.get == "confirmed")
     assert(resource.subject.get.reference.get == "Patient/example")
-    assert(resource.onsetDateTime.get.year().get() == 2012)
+    assert(resource.onsetDateTime.map(d => d.getYear).getOrElse(Assert.fail()) == 2012)
   }
 
   test("Test MedicationAdministration") {
@@ -78,7 +81,7 @@ class TestSuite extends FunSuite {
     assert(resource.code.get.coding.get.head.display.get == "Appendectomy (Procedure)")
     assert(resource.code.get.text.get == "Appendectomy")
     assert(resource.subject.get.getId.get == "example")
-    assert(resource.performedDateTime.get.toString("yyyy-MM-dd") == "2013-04-05")
+    assert(resource.performedDateTime.map(d => d.format(DateTimeFormatter.ofPattern( "yyyy-MM-dd"))).getOrElse(Assert.fail()) == "2013-04-05")
     assert(resource.performedPeriod.isEmpty)
     assert(resource.note.get.head.text.get == "Routine Appendectomy. Appendix was inflamed and in retro-caecal position")
   }
@@ -127,9 +130,9 @@ class TestSuite extends FunSuite {
     val patient = Deserializer.loadFhirResource(json).asInstanceOf[Patient]
 
     assert(patient.gender.orNull == Gender.female)
-    assert(patient.birthDate.orNull.year().get() == 1993)
-    assert(patient.birthDate.orNull.monthOfYear().get() == 5)
-    assert(patient.birthDate.orNull.dayOfMonth().get() == 7)
+    assert(patient.birthDate.map(d => d.getYear).getOrElse(Assert.fail()) == 1993)
+    assert(patient.birthDate.map(d => d.getMonthValue).getOrElse(Assert.fail()) == 5)
+    assert(patient.birthDate.map(d => d.getDayOfMonth).getOrElse(Assert.fail()) == 7)
     val uri = new java.net.URI(patient.meta.orNull.tag.get.head.system.get)
     assert(uri.getHost() == "lifeomic.com")
     assert(uri.getPath() == "/fhir/dataset")

@@ -1,7 +1,8 @@
 package com.lifeomic.fhirlib.v3.resources
 
+import java.time.LocalDateTime
+
 import com.lifeomic.fhirlib.v3.datatypes._
-import org.joda.time.DateTime
 
 object ProcedureStatus extends Enumeration {
   type ProcedureStatus = Value
@@ -30,7 +31,7 @@ class Procedure(override val id: Option[String],
                 val code: Option[CodeableConcept],
                 val subject: Option[Reference],
                 val context: Option[Reference],
-                val performedDateTime: Option[DateTime],
+                val performedDateTime: Option[LocalDateTime],
                 val performedPeriod: Option[Period],
                 val performer: Option[ProcedurePerformer],
                 val location: Option[Reference],
