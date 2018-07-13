@@ -124,6 +124,23 @@ class TestSuite extends FunSuite {
     assert(resource.repository.get.head.name.get == "FDA")
   }
 
+  test("Test Media") {
+    val json = scala.io.Source.fromFile(getClass.getResource("/Media.test.json").getFile).mkString
+    val media = Deserializer.loadFhirResource(json).asInstanceOf[Media]
+
+    assert(media.`type`.get == "photo")
+    assert(media.subject.get.reference.get == "be006e84-83a6-4ad2-bd4e-27ef322960a2")
+    assert(media.bodySite.get.coding.get.head.system.get == "http://snomed.info.sct")
+    assert(media.bodySite.get.coding.get.head.code.get == "80248007")
+    assert(media.height.get == 432)
+    assert(media.width.get == 640)
+    assert(media.content.get.contentType.get == "application/jpg")
+    assert(media.content.get.url.get == "http://breast-cancer.ca/wp-content/uploads/2014/11/Fig-2-9-IBC-mammogram.jpg")
+    assert(media.id.get == "05f392d5-7b16-4990-816e-610508d4e0b0")
+    assert(media.meta.get.tag.get.head.system.get == "http://lifeomic.com/fhir/dataset")
+    assert(media.meta.get.tag.get.head.code.get == "b5affd0b-329c-4e73-a9b5-122938462ce9")
+  }
+
 
   def testPatient(res: String) = {
     val json = scala.io.Source.fromFile(getClass.getResource(res).getFile).mkString

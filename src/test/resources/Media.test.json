@@ -1,0 +1,28 @@
+{
+    "resourceType": "Media",
+    "meta": {
+        "tag": [{
+            "system": "http://lifeomic.com/fhir/dataset",
+            "code": "b5affd0b-329c-4e73-a9b5-122938462ce9"
+        }]
+    },
+    "subject": {
+        "reference": "be006e84-83a6-4ad2-bd4e-27ef322960a2"
+    },
+    "bodySite": {
+        "coding": [{
+            "system": "http://snomed.info.sct",
+            "code": "80248007",
+            "display": "Left breast structure"
+        }]
+    },
+    "occurrenceDateTime": "2016-07-19T20:14:18-04:00",
+    "height": 432,
+    "width": 640,
+    "content": {
+        "contentType": "application/jpg",
+        "url": "http://breast-cancer.ca/wp-content/uploads/2014/11/Fig-2-9-IBC-mammogram.jpg"
+    },
+    "type": "photo",
+    "id": "05f392d5-7b16-4990-816e-610508d4e0b0"
+}
