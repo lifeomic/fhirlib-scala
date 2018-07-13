@@ -41,6 +41,7 @@ object ResourceSerializer extends Serializer[Resource] {
           case "Specimen" => json.extract[Specimen]
           case "Medication" => json.extract[Medication]
           case "Sequence" => json.extract[Sequence]
+          case "Media" => json.extract[Media]
           case resourceType: String => {
             new Resource(s"${resourceType} Not Implemented", None, None, None, None, None)
           }
@@ -74,6 +75,7 @@ object Deserializer {
       new EnumNameSerializer(ObservationStatus) +
       new EnumNameSerializer(RelatedType) +
       new EnumNameSerializer(Taken) +
+      new EnumNameSerializer(MediaType) +
       new EnumNameSerializer(VerificationStatus) +
       new EnumNameSerializer(ProcedureStatus) +
       new EnumNameSerializer(Specimen_Status) +
