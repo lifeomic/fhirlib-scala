@@ -8,6 +8,8 @@ class Reference(val reference: Option[String],
       val uri = new java.net.URI(reference.get)
       if (uri.getFragment != null) {
         return Some(uri.getFragment)
+      } else if (uri.getScheme == "urn") {
+        return uri.getSchemeSpecificPart.split(":").lastOption;
       }
       uri.getPath.split("/").lastOption
     } catch {

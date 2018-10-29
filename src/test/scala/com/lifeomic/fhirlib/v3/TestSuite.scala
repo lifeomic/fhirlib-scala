@@ -39,6 +39,18 @@ class TestSuite extends FunSuite {
     assert(resource.clinicalStatus.get.toString == ClinicalStatus.active.toString)
     assert(resource.verificationStatus.get == "confirmed")
     assert(resource.subject.get.reference.get == "Patient/example")
+    assert(resource.subject.get.getId.get == "example")
+    assert(resource.onsetDateTime.map(d => d.getYear).getOrElse(Assert.fail()) == 2012)
+  }
+
+  test("Test Condition witn uuid urn subject reference") {
+    val json = scala.io.Source.fromFile(getClass.getResource("/ConditionUuid.test.json").getFile).mkString
+    val resource = Deserializer.loadFhirResource(json).asInstanceOf[Condition]
+
+    assert(resource.id.get == "example")
+    assert(resource.clinicalStatus.get.toString == ClinicalStatus.active.toString)
+    assert(resource.verificationStatus.get == "confirmed")
+    assert(resource.subject.get.getId.get == "f7fd3fc5-b34e-42dc-bd39-da51cdc136df")
     assert(resource.onsetDateTime.map(d => d.getYear).getOrElse(Assert.fail()) == 2012)
   }
 
