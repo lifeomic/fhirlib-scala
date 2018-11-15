@@ -11,13 +11,35 @@ class Resource(val resourceType: String,
                val extension: Option[List[Extension]],
                val identifier: Option[List[Identifier]]) {
 
+  /**
+    * Finds the identifier values for the provided system.
+    *
+    * @param system a system
+    * @return [[String]] [[Option]]
+    */
+  def getIdentifiers(system: String): Option[Seq[String]] = {
+    identifier.map(identifiers => {
+      identifiers
+        .filter(identifier => identifier.system.exists(_.equals(system)))
+        .flatMap(identifier => identifier.value)
+    })
+  }
 
+  /**
+    * Finds the identifier value for any instance of the provided system.
+    *
+    * @deprecated - use [[Resource.getIdentifiers()]] instead
+    *
+    * @param system a system
+    * @return [[String]] [[Option]]
+    */
+  @Deprecated
   def getIdentifier(system: String): Option[String] = {
-    try {
-      identifier.get.filter(_.system.getOrElse("") == system).head.value
-    } catch {
-      case _: Throwable => None
-    }
+    identifier.flatMap(identifiers => {
+      identifiers
+        .find(identifier => identifier.system.exists(_.equals(system)))
+        .flatMap(identifier => identifier.value)
+    })
   }
 
   def getContained[T <: Resource]()(implicit ev: ClassTag[T]): List[T] = {

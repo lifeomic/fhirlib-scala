@@ -21,12 +21,23 @@ class TestSuite extends FunSuite {
     testPatient("/PatientUri.test.json")
   }
 
-  test("Test Specimen") {
+  test("Test Specimen [deprecated]") {
+
     val json = scala.io.Source.fromFile(getClass.getResource("/Specimen.test.json").getFile).mkString
     val specimen = Deserializer.loadFhirResource(json).asInstanceOf[Specimen]
 
     assert(specimen.status.get == "available")
     assert(specimen.getIdentifier("http://ehr.acme.org/identifiers/collections").orNull == "23234352356")
+    assert(specimen.getTypeCodings().head.code.get == "122555007")
+    assert(specimen.getTypeCodings().head.system.get.toString == "http://snomed.info/sct")
+  }
+
+  test("Test Specimen") {
+    val json = scala.io.Source.fromFile(getClass.getResource("/Specimen.test.json").getFile).mkString
+    val specimen = Deserializer.loadFhirResource(json).asInstanceOf[Specimen]
+
+    assert(specimen.status.get == "available")
+    assert(specimen.getIdentifiers("http://ehr.acme.org/identifiers/collections").head.head == "23234352356")
     assert(specimen.getTypeCodings().head.code.get == "122555007")
     assert(specimen.getTypeCodings().head.system.get.toString == "http://snomed.info/sct")
   }
