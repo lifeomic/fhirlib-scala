@@ -22,36 +22,87 @@ class Address(val use: Option[String],
               val period: Option[Period],
               val extension: Option[List[Extension]]) {
 
-  /**
-    *
-    * @todo - Remove [[Throwable]] catch
-    * @todo - Fix parsing logic
-    *
-    * @return
-    */
-  def getLatitude(): Option[Double] = {
-    try {
-      extension.get.filter(_.url.getOrElse("") == "http://hl7.org/fhir/StructureDefinition/geolocation")
-        .head.extension.get.filter(_.url.getOrElse("") == "latitude")
-        .head.valueDecimal
-    } catch {
-      case _: Throwable => None
-    }
+  def getLatitudes(): Option[Seq[Double]] = {
+    extension
+      .map(extensions => {
+        extensions
+          .filter(extension => {
+            extension.url.exists(url => url.equals("http://hl7.org/fhir/StructureDefinition/geolocation"))
+          })
+          .flatMap(extension => {
+            extension.extension
+              .map(extensions => {
+                extensions
+                  .filter(extension => {
+                    extension.url.exists(url => url.equals("latitude"))
+                  })
+                  .flatMap(extension => extension.valueDecimal)
+              })
+          })
+          .flatten
+      })
   }
 
-  /**
-    * @todo - Remove [[Throwable]] catch
-    * @todo - Fix parsing logic
-    *
-    * @return
-    */
+  @Deprecated
+  def getLatitude(): Option[Double] = {
+    extension
+      .flatMap(extensions => {
+        extensions
+          .find(extension => {
+            extension.url.exists(url => url.equals("http://hl7.org/fhir/StructureDefinition/geolocation"))
+          })
+          .flatMap(extension => {
+            extension.extension
+              .flatMap(extensions => {
+                extensions
+                  .find(extension => {
+                    extension.url.exists(url => url.equals("latitude"))
+                  })
+                  .flatMap(extension => extension.valueDecimal)
+              })
+          })
+      })
+  }
+
+  def getLongitudes(): Option[Seq[Double]] = {
+    extension
+      .map(extensions => {
+        extensions
+          .filter(extension => {
+            extension.url.exists(url => url.equals("http://hl7.org/fhir/StructureDefinition/geolocation"))
+          })
+          .flatMap(extension => {
+            extension.extension
+              .map(extensions => {
+                extensions
+                  .filter(extension => {
+                    extension.url.exists(url => url.equals("longitude"))
+                  })
+                  .flatMap(extension => extension.valueDecimal)
+              })
+          })
+          .flatten
+      })
+  }
+
+  @Deprecated
   def getLongitude(): Option[Double] = {
-    try {
-      extension.get.filter(_.url.getOrElse("") == "http://hl7.org/fhir/StructureDefinition/geolocation")
-        .head.extension.get.filter(_.url.getOrElse("") == "longitude")
-        .head.valueDecimal
-    } catch {
-      case _: Throwable => None
-    }
+    extension
+      .flatMap(extensions => {
+        extensions
+          .find(extension => {
+            extension.url.exists(url => url.equals("http://hl7.org/fhir/StructureDefinition/geolocation"))
+          })
+          .flatMap(extension => {
+            extension.extension
+              .flatMap(extensions => {
+                extensions
+                  .find(extension => {
+                    extension.url.exists(url => url.equals("longitude"))
+                  })
+                  .flatMap(extension => extension.valueDecimal)
+              })
+          })
+      })
   }
 }
