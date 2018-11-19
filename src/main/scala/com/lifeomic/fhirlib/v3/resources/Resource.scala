@@ -42,6 +42,15 @@ class Resource(val resourceType: String,
     })
   }
 
+  /**
+    *
+    * @todo - Handle missing [[contained]]
+    * @todo - Remove try-catch [[Throwable]]
+    *
+    * @param ev
+    * @tparam T
+    * @return
+    */
   def getContained[T <: Resource]()(implicit ev: ClassTag[T]): List[T] = {
     try {
       contained.get.collect {
@@ -52,6 +61,15 @@ class Resource(val resourceType: String,
     }
   }
 
+  /**
+    *
+    * @todo - Handle missing [[contained]]
+    * @todo - Remove try-catch [[Throwable]]
+    * @todo - Handle multiple [[Coding]] values
+    *
+    * @param id
+    * @return
+    */
   def getContained(id: String): Option[Resource] = {
     try {
       val res = contained.get.filter(x => x.id.orNull == id)
@@ -61,6 +79,15 @@ class Resource(val resourceType: String,
     }
   }
 
+  /**
+    * @todo - Migrate to [[Patient]] companion object
+    * @todo - Remove [[Option]] type for argument for systemContainsOpts
+    * @todo - handle multiple [[Coding]] values
+    *
+    * @param urlContains
+    * @param systemContainsOpts
+    * @return
+    */
   protected def getExtensionCoding(urlContains: String, systemContainsOpts: Option[List[String]]): Option[Coding] = {
     try {
       val ext = extension.get.find(_.url.getOrElse("") contains urlContains)

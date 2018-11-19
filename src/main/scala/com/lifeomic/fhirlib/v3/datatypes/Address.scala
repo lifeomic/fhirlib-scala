@@ -22,6 +22,13 @@ class Address(val use: Option[String],
               val period: Option[Period],
               val extension: Option[List[Extension]]) {
 
+  /**
+    *
+    * @todo - Remove [[Throwable]] catch
+    * @todo - Fix parsing logic
+    *
+    * @return
+    */
   def getLatitude(): Option[Double] = {
     try {
       extension.get.filter(_.url.getOrElse("") == "http://hl7.org/fhir/StructureDefinition/geolocation")
@@ -32,6 +39,12 @@ class Address(val use: Option[String],
     }
   }
 
+  /**
+    * @todo - Remove [[Throwable]] catch
+    * @todo - Fix parsing logic
+    *
+    * @return
+    */
   def getLongitude(): Option[Double] = {
     try {
       extension.get.filter(_.url.getOrElse("") == "http://hl7.org/fhir/StructureDefinition/geolocation")

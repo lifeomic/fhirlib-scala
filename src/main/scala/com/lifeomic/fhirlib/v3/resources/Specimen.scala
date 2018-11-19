@@ -50,6 +50,15 @@ class Specimen(override val id: Option[String],
                val note: Option[List[Annotation]]
               ) extends Resource("Specimen", id, contained, meta, extension, identifier) {
 
+  /**
+    *
+    * @todo - handle missing [[`type`]] value
+    * @todo - handle missing [[Coding]] value
+    * @todo - Use stream logic instead of [[ListBuffer]] concatenation
+    * @todo - Remove try-catch [[Throwable]]
+    *
+    * @return
+    */
   def getTypeCodings(): List[Coding] = {
     val res = ListBuffer[Coding]()
     try {

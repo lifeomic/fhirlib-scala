@@ -65,16 +65,38 @@ class Patient(override val id: Option[String],
 
   val raceEthnicitySystem = "2.16.840.1.113883.6.238"
 
+  /**
+    *
+    * @todo - Handle multiple parsed [[Coding]] values
+    *
+    * @param urlContains
+    * @param systemContains
+    * @return
+    */
   def getRaceCoding(urlContains: String = "us-core-race",
                     systemContains: String = "Race"): Option[Coding] = {
     getExtensionCoding(urlContains, Some(List(systemContains, raceEthnicitySystem)))
   }
 
+  /**
+    *
+    * @todo - Handle multiple parsed [[Coding]] values
+    *
+    * @param urlContains
+    * @param systemContains
+    * @return
+    */
   def getEthnicityCoding(urlContains: String = "us-core-ethnicity",
                          systemContains: String = "Ethnicity"): Option[Coding] = {
     getExtensionCoding(urlContains, Some(List(systemContains, raceEthnicitySystem)))
   }
 
+  /**
+    *
+    * @todo - Optimize by using stream patterns instead of [[Seq]] concatenation
+    *
+    * @return
+    */
   def getLanguageCodings(): List[Coding] = {
     if (communication.isEmpty) {
       return List[Coding]()
@@ -93,10 +115,21 @@ class Patient(override val id: Option[String],
     codings.toList
   }
 
+  /**
+    * @todo - Handle missing [[Coding.code]] value
+    *
+    * @return
+    */
   def getLanguageCodes(): List[String] = {
     getLanguageCodings().map(_.code.get)
   }
 
+  /**
+    *
+    * @todo - use stream based [[Option]] handling logic
+    *
+    * @return
+    */
   def getAddresses(): List[Address] = {
     if (address.isEmpty) {
       return List[Address]()
@@ -104,6 +137,13 @@ class Patient(override val id: Option[String],
     address.get
   }
 
+  /**
+    *
+    * @todo - use stream based [[Option]] handling logic
+    * @todo - handle missing [[Patient.birthDate]]
+    *
+    * @return
+    */
   def getAge(): Option[Int] = {
     if (birthDate.isEmpty) {
       return None
