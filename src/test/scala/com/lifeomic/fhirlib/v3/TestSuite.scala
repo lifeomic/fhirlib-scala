@@ -21,25 +21,12 @@ class TestSuite extends FunSuite {
     testPatient("/PatientUri.test.json")
   }
 
-  test("Test Specimen [deprecated]") {
-
-    val json = scala.io.Source.fromFile(getClass.getResource("/Specimen.test.json").getFile).mkString
-    val specimen = Deserializer.loadFhirResource(json).asInstanceOf[Specimen]
-
-    assert(specimen.status.get == "available")
-    assert(specimen.getIdentifier("http://ehr.acme.org/identifiers/collections").orNull == "23234352356")
-    assert(specimen.getTypeCodings().head.code.get == "122555007")
-    assert(specimen.getTypeCodings().head.system.get.toString == "http://snomed.info/sct")
-  }
-
   test("Test Specimen") {
     val json = scala.io.Source.fromFile(getClass.getResource("/Specimen.test.json").getFile).mkString
     val specimen = Deserializer.loadFhirResource(json).asInstanceOf[Specimen]
 
     assert(specimen.status.get == "available")
     assert(specimen.findIdentifiers("http://ehr.acme.org/identifiers/collections").head.head == "23234352356")
-    assert(specimen.getTypeCodings().head.code.get == "122555007")
-    assert(specimen.getTypeCodings().head.system.get.toString == "http://snomed.info/sct")
   }
 
   test("Test Condition") {
@@ -71,12 +58,9 @@ class TestSuite extends FunSuite {
 
     assert(resource.id.get == "medadmin0301")
 
-    val containedMeds = resource.getContained[Medication]
-    assert(containedMeds.length == 1)
-
-    val med = resource.getContained(resource.medicationReference.get.findId.get)
-    assert(med.get.id.get == "med0301")
-    assert(resource.medicationReference.get.getId().get == "med0301")
+    val med = resource.findContained(resource.medicationReference.get.findId.get).get.head
+    assert(med.id.get == "med0301")
+    assert(resource.medicationReference.get.findId().get == "med0301")
     assert(resource.status.get == "in-progress")
   }
 
@@ -86,10 +70,10 @@ class TestSuite extends FunSuite {
 
     assert(resource.id.isEmpty)
 
-    val containedMeds = resource.getContained[Medication]
+    val containedMeds = resource.contained.get
     assert(containedMeds.length == 1)
-    val med = resource.getContained(resource.medicationReference.get.getId().get)
-    assert(med.get.id.get == "56bfdc47-a07a-4e07-9c40-baabf30bdfed")
+    val med = resource.findContained(resource.medicationReference.get.findId().get).get.head
+    assert(med.id.get == "56bfdc47-a07a-4e07-9c40-baabf30bdfed")
     assert(resource.status.isEmpty)
   }
 
@@ -176,30 +160,5 @@ class TestSuite extends FunSuite {
     val uri = new java.net.URI(patient.meta.orNull.tag.get.head.system.get)
     assert(uri.getHost() == "lifeomic.com")
     assert(uri.getPath() == "/fhir/dataset")
-
-    val raceCoding = patient.getRaceCoding().get
-    assert(raceCoding.code.get == "2106-3")
-    assert(raceCoding.display.get == "White")
-    assert(patient.getEthnicityCoding().get.code.get == "2186-5")
-    assert(patient.getEthnicityCoding().get.display.get == "Nonhispanic")
-    assert(patient.findCurrentAge().get >= 25)
-    assert(patient.getLanguageCodes().head == "en-US")
-
-    assert(patient.getAddresses().head.getLatitude().get == 42.183400380260686)
-    assert(patient.getAddresses().head.getLongitude().get == -72.46253600130517)
-
-    val languageCodes = patient.getLanguageCodes()
-    assert(languageCodes.length == 1)
-    assert(languageCodes.head == "en-US")
-
-    val languageCodings = patient.getLanguageCodings()
-    assert(languageCodings.length == 1)
-
-    val languageCoding = languageCodings.head
-    assert(languageCoding.system.get == "http://hl7.org/fhir/ValueSet/languages")
-    assert(languageCoding.version.isEmpty)
-    assert(languageCoding.code.get == "en-US")
-    assert(languageCoding.display.get == "English (United States)")
-    assert(languageCoding.userSelected.isEmpty)
   }
 }

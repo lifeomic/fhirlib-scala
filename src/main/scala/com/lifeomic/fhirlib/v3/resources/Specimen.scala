@@ -50,23 +50,4 @@ class Specimen(override val id: Option[String],
                val note: Option[List[Annotation]]
               ) extends Resource("Specimen", id, contained, meta, extension, identifier) {
 
-
-  /**
-    *
-    * @deprecated - this method will be removed in a later release
-    *
-    * @return
-    */
-  @Deprecated
-  def getTypeCodings(): List[Coding] = {
-    val res = ListBuffer[Coding]()
-    try {
-      this.`type`.get.coding.get.foreach(coding => {
-        res += coding
-      })
-    } catch {
-      case _: Throwable => res.toList
-    }
-    res.toList
-  }
 }

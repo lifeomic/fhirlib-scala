@@ -11,67 +11,6 @@ class ResourceTest {
       .registerModule(DefaultScalaModule)
 
   @Test
-  @Deprecated
-  def findContained(): Unit = {
-
-    val id: String = "foobar"
-
-    val json: String =
-      s"""
-         |{
-         |  "contained": [
-         |    {
-         |      "id": "$id"
-         |    }
-         |  ]
-         |}
-      """.stripMargin
-
-    val resource = mapper.readValue(json, classOf[Resource])
-
-    val containedOrNot = resource.findContained(id)
-
-    if (containedOrNot.isEmpty) {
-      Assert.fail()
-    }
-
-    containedOrNot.foreach(resources => {
-      resources.foreach(resource => {
-        resource.id.foreach(x => Assert.assertEquals(id, x))
-      })
-    })
-  }
-
-
-
-  @Test
-  @Deprecated
-  def getContained(): Unit = {
-
-    val id: String = "foobar"
-
-    val json: String =
-      s"""
-        |{
-        |  "contained": [
-        |    {
-        |      "id": "$id"
-        |    }
-        |  ]
-        |}
-      """.stripMargin
-
-    val resource = mapper.readValue(json, classOf[Resource])
-
-    val res: Resource =
-      resource.getContained(id)
-        .getOrElse(Assert.fail())
-        .asInstanceOf[Resource]
-
-    res.id.foreach(x => Assert.assertEquals(id, x))
-  }
-
-  @Test
   def findCodes(): Unit = {
 
     val url = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race"
