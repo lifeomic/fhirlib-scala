@@ -4,20 +4,43 @@ class Reference(val reference: Option[String],
                 val identifier: Option[Identifier],
                 val display: Option[String]) {
 
+
   /**
-    * @todo - Remove [[Throwable]] catch
+    * Finds the id from the [[Reference.reference]] if available.
     *
-    * @return
+    * @return [[Some]] id
     */
+  def findId(): Option[String] = {
+    reference.flatMap(reference => {
+      val uri = new java.net.URI(reference)
+      if (uri.getFragment != null) {
+        return Some(uri.getFragment)
+      } else if (uri.getScheme == "urn") {
+        val parts = uri.getSchemeSpecificPart.split(":")
+        if (parts(0) == "uuid") {
+          return parts.lastOption
+        }
+      }
+      uri.getPath.split("/").lastOption
+    })
+  }
+
+  /**
+    * @deprecated
+    * @see [[Reference.findId()]]
+    *
+    * @return [[Some]] id
+    */
+  @Deprecated
   def getId(): Option[String] = {
     try {
       val uri = new java.net.URI(reference.get)
       if (uri.getFragment != null) {
         return Some(uri.getFragment)
       } else if (uri.getScheme == "urn") {
-        val parts = uri.getSchemeSpecificPart.split(":");
+        val parts = uri.getSchemeSpecificPart.split(":")
         if (parts(0) == "uuid") {
-          return parts.lastOption;
+          return parts.lastOption
         }
       }
       uri.getPath.split("/").lastOption
