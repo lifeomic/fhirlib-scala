@@ -182,7 +182,7 @@ class TestSuite extends FunSuite {
     assert(raceCoding.display.get == "White")
     assert(patient.getEthnicityCoding().get.code.get == "2186-5")
     assert(patient.getEthnicityCoding().get.display.get == "Nonhispanic")
-    assert(patient.getAge().get >= 25)
+    assert(patient.findCurrentAge().get >= 25)
     assert(patient.getLanguageCodes().head == "en-US")
 
     assert(patient.getAddresses().head.getLatitude().get == 42.183400380260686)

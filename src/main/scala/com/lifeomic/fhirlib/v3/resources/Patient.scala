@@ -67,12 +67,14 @@ class Patient(override val id: Option[String],
 
   /**
     *
-    * @todo - Handle multiple parsed [[Coding]] values
+    * @deprecated
+    * @see [[Resource.findCodes()]]
     *
     * @param urlContains
     * @param systemContains
     * @return
     */
+  @Deprecated
   def getRaceCoding(urlContains: String = "us-core-race",
                     systemContains: String = "Race"): Option[Coding] = {
     getExtensionCoding(urlContains, Some(List(systemContains, raceEthnicitySystem)))
@@ -80,12 +82,14 @@ class Patient(override val id: Option[String],
 
   /**
     *
-    * @todo - Handle multiple parsed [[Coding]] values
+    * @deprecated
+    * @see [[Resource.findCodes()]]
     *
     * @param urlContains
     * @param systemContains
     * @return
     */
+  @Deprecated
   def getEthnicityCoding(urlContains: String = "us-core-ethnicity",
                          systemContains: String = "Ethnicity"): Option[Coding] = {
     getExtensionCoding(urlContains, Some(List(systemContains, raceEthnicitySystem)))
@@ -93,61 +97,60 @@ class Patient(override val id: Option[String],
 
   /**
     *
-    * @todo - Optimize by using stream patterns instead of [[Seq]] concatenation
+    * @deprecated - this method will be removed in a later release
     *
     * @return
     */
+  @Deprecated
   def getLanguageCodings(): List[Coding] = {
-    if (communication.isEmpty) {
-      return List[Coding]()
-    }
-
-    val codings = ListBuffer[Coding]()
-    communication.get.foreach(comm => {
-      if (comm.language.coding.nonEmpty) {
-        comm.language.coding.get.foreach(coding => {
-          if (coding.code.nonEmpty) {
-            codings += coding
-          }
-        })
-      }
-    })
-    codings.toList
+    communication
+      .map(communications => {
+        communications
+          .flatMap(communication => communication.language.coding)
+          .flatten
+      })
+      .getOrElse(List())
   }
 
   /**
-    * @todo - Handle missing [[Coding.code]] value
+    *
+    * @deprecated - this method will be removed in a later release
     *
     * @return
     */
+  @Deprecated
   def getLanguageCodes(): List[String] = {
-    getLanguageCodings().map(_.code.get)
+    getLanguageCodings().flatMap(_.code)
   }
 
   /**
     *
-    * @todo - use stream based [[Option]] handling logic
+    * @deprecated - this method will be removed in a later release
     *
     * @return
     */
+  @Deprecated
   def getAddresses(): List[Address] = {
-    if (address.isEmpty) {
-      return List[Address]()
-    }
-    address.get
+    address.getOrElse(List())
   }
 
   /**
+    * Finds the current age.
     *
-    * @todo - use stream based [[Option]] handling logic
-    * @todo - handle missing [[Patient.birthDate]]
+    * @return [[Some]] [[Int]] representing age in years
+    */
+  def findCurrentAge(): Option[Int] = {
+    birthDate.map(date => ChronoUnit.YEARS.between(date, LocalDateTime.now).toInt)
+  }
+
+  /**
+    * @deprecated
+    * @see [[Patient.findCurrentAge()]]
     *
     * @return
     */
+  @Deprecated
   def getAge(): Option[Int] = {
-    if (birthDate.isEmpty) {
-      return None
-    }
-    return Some(ChronoUnit.YEARS.between(birthDate.get, LocalDateTime.now).toInt)
+    birthDate.map(date => ChronoUnit.YEARS.between(date, LocalDateTime.now).toInt)
   }
 }
