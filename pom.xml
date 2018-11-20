@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.lifeomic</groupId>
@@ -21,12 +23,16 @@
 
     <developers>
         <developer>
-            <name>David Brown</name>
-            <email>david.brown@lifeomic.com</email>
-            <organization>Lifeomic inc.</organization>
+            <organization>LifeOmic</organization>
             <organizationUrl>https://lifeomic.com/</organizationUrl>
         </developer>
     </developers>
+
+    <scm>
+        <url>http://github.com/lifeomic/fhirlib-scala/tree/master</url>
+        <connection>scm:git:git://github.com/lifeomic/fhirlib-scala.git</connection>
+        <developerConnection>scm:git:ssh://github.com/lifeomic/fhirlib-scala.git</developerConnection>
+    </scm>
 
     <distributionManagement>
         <snapshotRepository>
@@ -41,10 +47,101 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <scala.version>2.11.12</scala.version>
-        <scala.binary.version>2.11</scala.binary.version>
-        <scala.plugin.version>3.2.2</scala.plugin.version>
+        <scala.version>${scala.major.version}.${scala.minor.version}.${scala.patch.version}</scala.version>
+        <scala.binary.version>${scala.major.version}.${scala.minor.version}</scala.binary.version>
+        <scala.major.version>2</scala.major.version>
+        <scala.minor.version>11</scala.minor.version>
+        <scala.patch.version>12</scala.patch.version>
+        <json4s.version>3.2.11</json4s.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json4s</groupId>
+            <artifactId>json4s-ast_${scala.binary.version}</artifactId>
+            <version>${json4s.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json4s</groupId>
+            <artifactId>json4s-jackson_${scala.binary.version}</artifactId>
+            <version>${json4s.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json4s</groupId>
+            <artifactId>json4s-core_${scala.binary.version}</artifactId>
+            <version>${json4s.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json4s</groupId>
+            <artifactId>json4s-ext_${scala.binary.version}</artifactId>
+            <version>${json4s.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.fge</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>2.2.6</version>
+        </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_${scala.binary.version}</artifactId>
+            <version>3.0.5</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.9.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.9.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-parameter-names</artifactId>
+            <version>2.9.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+            <version>2.9.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.9.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-scala_${scala.binary.version}</artifactId>
+            <version>2.9.7</version>
+        </dependency>
+
+    </dependencies>
 
     <build>
         <plugins>
@@ -184,59 +281,5 @@
         </plugins>
     </build>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>2.11.8</version>
-        </dependency>
-        <dependency>
-            <groupId>org.scalactic</groupId>
-            <artifactId>scalactic_2.11</artifactId>
-            <version>3.0.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.11</artifactId>
-            <version>3.0.5</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.json4s</groupId>
-            <artifactId>json4s-ast_2.11</artifactId>
-            <version>3.2.11</version>
-        </dependency>
-        <dependency>
-            <groupId>org.json4s</groupId>
-            <artifactId>json4s-jackson_2.11</artifactId>
-            <version>3.2.11</version>
-        </dependency>
-        <dependency>
-            <groupId>org.json4s</groupId>
-            <artifactId>json4s-core_2.11</artifactId>
-            <version>3.2.11</version>
-        </dependency>
-        <dependency>
-            <groupId>org.json4s</groupId>
-            <artifactId>json4s-ext_2.11</artifactId>
-            <version>3.6.0-M3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.fge</groupId>
-            <artifactId>json-schema-validator</artifactId>
-            <version>2.2.6</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
-    <scm>
-        <connection>scm:git:git://github.com/lifeomic/fhirlib-scala.git </connection>
-        <developerConnection>scm:git:ssh://github.com/lifeomic/fhirlib-scala.git </developerConnection>
-        <url>http://github.com/lifeomic/fhirlib-scala/tree/master</url>
-  </scm>
 </project>

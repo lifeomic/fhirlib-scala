@@ -13,6 +13,12 @@ class HumanName(val use: Option[String],
                 val suffix: Option[List[String]],
                 val period: Option[Period]) {
 
+  /**
+    * This method will be removed in a later release.
+    *
+    * @return
+    */
+  @Deprecated
   def flatten(): Seq[Any] = {
     Seq(use.orNull, text.orNull, family.orNull, given.map(_.head).orNull, prefix.map(_.head).orNull,
       suffix.map(_.head).orNull, period.map(_.start.orNull).orNull, period.map(_.end.orNull).orNull)

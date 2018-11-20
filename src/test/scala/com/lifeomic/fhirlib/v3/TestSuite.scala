@@ -37,7 +37,7 @@ class TestSuite extends FunSuite {
     val specimen = Deserializer.loadFhirResource(json).asInstanceOf[Specimen]
 
     assert(specimen.status.get == "available")
-    assert(specimen.getIdentifiers("http://ehr.acme.org/identifiers/collections").head.head == "23234352356")
+    assert(specimen.findIdentifiers("http://ehr.acme.org/identifiers/collections").head.head == "23234352356")
     assert(specimen.getTypeCodings().head.code.get == "122555007")
     assert(specimen.getTypeCodings().head.system.get.toString == "http://snomed.info/sct")
   }
@@ -50,7 +50,7 @@ class TestSuite extends FunSuite {
     assert(resource.clinicalStatus.get.toString == ClinicalStatus.active.toString)
     assert(resource.verificationStatus.get == "confirmed")
     assert(resource.subject.get.reference.get == "Patient/example")
-    assert(resource.subject.get.getId.get == "example")
+    assert(resource.subject.get.findId.get == "example")
     assert(resource.onsetDateTime.map(d => d.getYear).getOrElse(Assert.fail()) == 2012)
   }
 
@@ -61,7 +61,7 @@ class TestSuite extends FunSuite {
     assert(resource.id.get == "example")
     assert(resource.clinicalStatus.get.toString == ClinicalStatus.active.toString)
     assert(resource.verificationStatus.get == "confirmed")
-    assert(resource.subject.get.getId.get == "f7fd3fc5-b34e-42dc-bd39-da51cdc136df")
+    assert(resource.subject.get.findId.get == "f7fd3fc5-b34e-42dc-bd39-da51cdc136df")
     assert(resource.onsetDateTime.map(d => d.getYear).getOrElse(Assert.fail()) == 2012)
   }
 
@@ -74,7 +74,7 @@ class TestSuite extends FunSuite {
     val containedMeds = resource.getContained[Medication]
     assert(containedMeds.length == 1)
 
-    val med = resource.getContained(resource.medicationReference.get.getId.get)
+    val med = resource.getContained(resource.medicationReference.get.findId.get)
     assert(med.get.id.get == "med0301")
     assert(resource.medicationReference.get.getId().get == "med0301")
     assert(resource.status.get == "in-progress")
@@ -103,7 +103,7 @@ class TestSuite extends FunSuite {
     assert(resource.code.get.coding.get.head.code.get == "80146002")
     assert(resource.code.get.coding.get.head.display.get == "Appendectomy (Procedure)")
     assert(resource.code.get.text.get == "Appendectomy")
-    assert(resource.subject.get.getId.get == "example")
+    assert(resource.subject.get.findId.get == "example")
     assert(resource.performedDateTime.map(d => d.format(DateTimeFormatter.ofPattern( "yyyy-MM-dd"))).getOrElse(Assert.fail()) == "2013-04-05")
     assert(resource.performedPeriod.isEmpty)
     assert(resource.note.get.head.text.get == "Routine Appendectomy. Appendix was inflamed and in retro-caecal position")
@@ -182,7 +182,7 @@ class TestSuite extends FunSuite {
     assert(raceCoding.display.get == "White")
     assert(patient.getEthnicityCoding().get.code.get == "2186-5")
     assert(patient.getEthnicityCoding().get.display.get == "Nonhispanic")
-    assert(patient.getAge().get >= 25)
+    assert(patient.findCurrentAge().get >= 25)
     assert(patient.getLanguageCodes().head == "en-US")
 
     assert(patient.getAddresses().head.getLatitude().get == 42.183400380260686)
