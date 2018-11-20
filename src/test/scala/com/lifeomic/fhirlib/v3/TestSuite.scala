@@ -37,7 +37,7 @@ class TestSuite extends FunSuite {
     val specimen = Deserializer.loadFhirResource(json).asInstanceOf[Specimen]
 
     assert(specimen.status.get == "available")
-    assert(specimen.getIdentifiers("http://ehr.acme.org/identifiers/collections").head.head == "23234352356")
+    assert(specimen.findIdentifiers("http://ehr.acme.org/identifiers/collections").head.head == "23234352356")
     assert(specimen.getTypeCodings().head.code.get == "122555007")
     assert(specimen.getTypeCodings().head.system.get.toString == "http://snomed.info/sct")
   }

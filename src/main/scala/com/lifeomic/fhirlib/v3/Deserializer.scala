@@ -30,7 +30,10 @@ object ResourceSerializer extends Serializer[Resource] {
     case (TypeInfo(ParentClass, _), json) => json match {
       case x: JObject => {
         x.values.get("resourceType").orNull match {
+
           case "Condition" => json.extract[Condition]
+          case "Media" => json.extract[Media]
+          case "Medication" => json.extract[Medication]
           case "MedicationAdministration" => json.extract[MedicationAdministration]
           case "MedicationRequest" => json.extract[MedicationRequest]
           case "MedicationStatement" => json.extract[MedicationStatement]
@@ -38,13 +41,13 @@ object ResourceSerializer extends Serializer[Resource] {
           case "Patient" => json.extract[Patient]
           case "Procedure" => json.extract[Procedure]
           case "Schedule" => json.extract[Schedule]
-          case "Specimen" => json.extract[Specimen]
-          case "Medication" => json.extract[Medication]
           case "Sequence" => json.extract[Sequence]
-          case "Media" => json.extract[Media]
+          case "Specimen" => json.extract[Specimen]
+
           case resourceType: String => {
             new Resource(s"${resourceType} Not Implemented", None, None, None, None, None)
           }
+
           case _ => {
             throw new MappingException("This resource does not have a resourceType")
           }
@@ -63,23 +66,25 @@ object Deserializer {
     implicit val formats: Formats = DefaultFormats +
       ResourceSerializer +
       DateTimeSerializer +
+      new EnumNameSerializer(Address_Use) +
+      new EnumNameSerializer(Address_Type) +
       new EnumNameSerializer(ClinicalStatus) +
       new EnumNameSerializer(Gender) +
       new EnumNameSerializer(HumanName_Use) +
       new EnumNameSerializer(Identifier_Use) +
+      new EnumNameSerializer(MediaType) +
       new EnumNameSerializer(MedicationAdministrationStatus) +
       new EnumNameSerializer(MedicationRequestIntent) +
       new EnumNameSerializer(MedicationRequestPriority) +
       new EnumNameSerializer(MedicationRequestStatus) +
       new EnumNameSerializer(MedicationStatementStatus) +
+      new EnumNameSerializer(MedicationStatus) +
       new EnumNameSerializer(ObservationStatus) +
-      new EnumNameSerializer(RelatedType) +
-      new EnumNameSerializer(Taken) +
-      new EnumNameSerializer(MediaType) +
-      new EnumNameSerializer(VerificationStatus) +
       new EnumNameSerializer(ProcedureStatus) +
+      new EnumNameSerializer(RelatedType) +
       new EnumNameSerializer(Specimen_Status) +
-      new EnumNameSerializer(MedicationStatus)
+      new EnumNameSerializer(Taken) +
+      new EnumNameSerializer(VerificationStatus)
 
     read[Resource](jsonString)
   }
