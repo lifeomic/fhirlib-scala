@@ -26,43 +26,6 @@ class Resource(val resourceType: String,
   }
 
   /**
-    * Finds the identifier value for any instance of the provided system.
-    *
-    * @deprecated
-    * @see [[Resource.findIdentifiers()]]
-    *
-    * @param system a system
-    * @return [[String]] [[Option]]
-    */
-  @Deprecated
-  def getIdentifier(system: String): Option[String] = {
-    identifier.flatMap(identifiers => {
-      identifiers
-        .find(identifier => identifier.system.exists(_.equals(system)))
-        .flatMap(identifier => identifier.value)
-    })
-  }
-
-  /**
-    *
-    * @deprecated
-    *
-    * @param ev
-    * @tparam T
-    * @return
-    */
-  @Deprecated
-  def getContained[T <: Resource]()(implicit ev: ClassTag[T]): List[T] = {
-    try {
-      contained.get.collect {
-        case x: T => x
-      }
-    } catch {
-      case _: Throwable => List[T]()
-    }
-  }
-
-  /**
     * Finds [[Resource]]s in [[Resource.contained]] with the provided
     * [[Resource.id]] and [[Resource]] type.
     *
@@ -81,22 +44,6 @@ class Resource(val resourceType: String,
     })
   }
 
-  /**
-    *
-    * @deprecated
-    * @see [[Resource.findContained()]]
-    *
-    * @param id
-    * @return
-    */
-  @Deprecated
-  def getContained(id: String): Option[Resource] = {
-    contained.flatMap(contained => {
-      contained.find(resource => {
-        resource.id.exists(_.equals(id))
-      })
-    })
-  }
 
   /**
     * Finds [[Coding.code]]s within the [[Resource.extension]]s for the provided
@@ -126,30 +73,5 @@ class Resource(val resourceType: String,
           })
           .flatten
       })
-  }
-
-  /**
-    *
-    * @deprecated
-    * @see [[Resource.findCodes()]]
-    *
-    * @param urlContains
-    * @param systemContainsOpts
-    * @return
-    */
-  @Deprecated
-  protected def getExtensionCoding(urlContains: String, systemContainsOpts: Option[List[String]]): Option[Coding] = {
-    try {
-      val ext = extension.get.find(_.url.getOrElse("") contains urlContains)
-      val coding = ext.get.valueCodeableConcept.get.coding.get
-      systemContainsOpts match {
-        case Some(systemContains) =>
-          coding.find(x => x.system.nonEmpty && systemContains.exists(x.system.get contains _))
-        case None =>
-          coding.headOption
-      }
-    } catch {
-      case _: Throwable => None
-    }
   }
 }

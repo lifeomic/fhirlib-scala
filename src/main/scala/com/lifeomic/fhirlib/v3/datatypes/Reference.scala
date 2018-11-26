@@ -24,28 +24,4 @@ class Reference(val reference: Option[String],
       uri.getPath.split("/").lastOption
     })
   }
-
-  /**
-    * @deprecated
-    * @see [[Reference.findId()]]
-    *
-    * @return [[Some]] id
-    */
-  @Deprecated
-  def getId(): Option[String] = {
-    try {
-      val uri = new java.net.URI(reference.get)
-      if (uri.getFragment != null) {
-        return Some(uri.getFragment)
-      } else if (uri.getScheme == "urn") {
-        val parts = uri.getSchemeSpecificPart.split(":")
-        if (parts(0) == "uuid") {
-          return parts.lastOption
-        }
-      }
-      uri.getPath.split("/").lastOption
-    } catch {
-      case _: Throwable => None
-    }
-  }
 }

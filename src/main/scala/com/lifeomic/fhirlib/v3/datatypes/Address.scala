@@ -43,27 +43,6 @@ class Address(val use: Option[String],
       })
   }
 
-  @Deprecated
-  def getLatitude(): Option[Double] = {
-    extension
-      .flatMap(extensions => {
-        extensions
-          .find(extension => {
-            extension.url.exists(url => url.equals("http://hl7.org/fhir/StructureDefinition/geolocation"))
-          })
-          .flatMap(extension => {
-            extension.extension
-              .flatMap(extensions => {
-                extensions
-                  .find(extension => {
-                    extension.url.exists(url => url.equals("latitude"))
-                  })
-                  .flatMap(extension => extension.valueDecimal)
-              })
-          })
-      })
-  }
-
   def getLongitudes(): Option[Seq[Double]] = {
     extension
       .map(extensions => {
@@ -82,27 +61,6 @@ class Address(val use: Option[String],
               })
           })
           .flatten
-      })
-  }
-
-  @Deprecated
-  def getLongitude(): Option[Double] = {
-    extension
-      .flatMap(extensions => {
-        extensions
-          .find(extension => {
-            extension.url.exists(url => url.equals("http://hl7.org/fhir/StructureDefinition/geolocation"))
-          })
-          .flatMap(extension => {
-            extension.extension
-              .flatMap(extensions => {
-                extensions
-                  .find(extension => {
-                    extension.url.exists(url => url.equals("longitude"))
-                  })
-                  .flatMap(extension => extension.valueDecimal)
-              })
-          })
       })
   }
 }
