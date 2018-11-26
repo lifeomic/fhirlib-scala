@@ -66,91 +66,11 @@ class Patient(override val id: Option[String],
   val raceEthnicitySystem = "2.16.840.1.113883.6.238"
 
   /**
-    *
-    * @deprecated
-    * @see [[Resource.findCodes()]]
-    *
-    * @param urlContains
-    * @param systemContains
-    * @return
-    */
-  @Deprecated
-  def getRaceCoding(urlContains: String = "us-core-race",
-                    systemContains: String = "Race"): Option[Coding] = {
-    getExtensionCoding(urlContains, Some(List(systemContains, raceEthnicitySystem)))
-  }
-
-  /**
-    *
-    * @deprecated
-    * @see [[Resource.findCodes()]]
-    *
-    * @param urlContains
-    * @param systemContains
-    * @return
-    */
-  @Deprecated
-  def getEthnicityCoding(urlContains: String = "us-core-ethnicity",
-                         systemContains: String = "Ethnicity"): Option[Coding] = {
-    getExtensionCoding(urlContains, Some(List(systemContains, raceEthnicitySystem)))
-  }
-
-  /**
-    *
-    * @deprecated - this method will be removed in a later release
-    *
-    * @return
-    */
-  @Deprecated
-  def getLanguageCodings(): List[Coding] = {
-    communication
-      .map(communications => {
-        communications
-          .flatMap(communication => communication.language.coding)
-          .flatten
-      })
-      .getOrElse(List())
-  }
-
-  /**
-    *
-    * @deprecated - this method will be removed in a later release
-    *
-    * @return
-    */
-  @Deprecated
-  def getLanguageCodes(): List[String] = {
-    getLanguageCodings().flatMap(_.code)
-  }
-
-  /**
-    *
-    * @deprecated - this method will be removed in a later release
-    *
-    * @return
-    */
-  @Deprecated
-  def getAddresses(): List[Address] = {
-    address.getOrElse(List())
-  }
-
-  /**
     * Finds the current age.
     *
     * @return [[Some]] [[Int]] representing age in years
     */
   def findCurrentAge(): Option[Int] = {
-    birthDate.map(date => ChronoUnit.YEARS.between(date, LocalDateTime.now).toInt)
-  }
-
-  /**
-    * @deprecated
-    * @see [[Patient.findCurrentAge()]]
-    *
-    * @return
-    */
-  @Deprecated
-  def getAge(): Option[Int] = {
     birthDate.map(date => ChronoUnit.YEARS.between(date, LocalDateTime.now).toInt)
   }
 }
