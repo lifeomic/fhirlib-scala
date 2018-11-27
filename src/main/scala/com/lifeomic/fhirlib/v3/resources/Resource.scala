@@ -44,6 +44,35 @@ class Resource(val resourceType: String,
     })
   }
 
+  /**
+    * Finds [[Coding]]s within the [[Resource.extension]]s for the provided
+    * [[Extension.url]] and within the [[Extension.valueCodeableConcept]]
+    * [[CodeableConcept.coding]] values for the provided [[Coding.system]].
+    *
+    * If [[Resource.extension]] is [[None]], [[None]] will be returned.
+    *
+    * @param url    the [[Extension.url]]
+    * @param system the [[Coding.system]]
+    *
+    * @return [[Some]] [[Seq]] of codes if found
+    */
+  def findCodings(url: String, system: String): Option[Seq[Coding]] = {
+    extension
+        .map(extensions => {
+          extensions
+              .filter(extension => extension.url.exists(_.equals(url)))
+              .flatMap(extension => {
+                extension.valueCodeableConcept.flatMap(concept => {
+                  concept.coding.map(codings => {
+                    codings
+                        .filter(coding => coding.system.exists(_.equals(system)))
+                  })
+                })
+              })
+              .flatten
+        })
+  }
+
 
   /**
     * Finds [[Coding.code]]s within the [[Resource.extension]]s for the provided
