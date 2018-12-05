@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>DateTimeSerializer - com.lifeomic:fhirlib 0.3.6 API - com.lifeomic.fhirlib.v3.DateTimeSerializer</title>
-          <meta name="description" content="DateTimeSerializer - com.lifeomic fhirlib 0.3.6 API - com.lifeomic.fhirlib.v3.DateTimeSerializer" />
-          <meta name="keywords" content="DateTimeSerializer com.lifeomic fhirlib 0.3.6 API com.lifeomic.fhirlib.v3.DateTimeSerializer" />
+          <title>DateTimeSerializer - com.lifeomic:fhirlib 0.6.1 API - com.lifeomic.fhirlib.v3.DateTimeSerializer</title>
+          <meta name="description" content="DateTimeSerializer - com.lifeomic fhirlib 0.6.1 API - com.lifeomic.fhirlib.v3.DateTimeSerializer" />
+          <meta name="keywords" content="DateTimeSerializer com.lifeomic fhirlib 0.6.1 API com.lifeomic.fhirlib.v3.DateTimeSerializer" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -45,13 +45,13 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <span class="name">DateTimeSerializer</span><span class="result"> extends <span class="extype" name="org.json4s.CustomSerializer">CustomSerializer</span>[<span class="extype" name="org.joda.time.DateTime">DateTime</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">DateTimeSerializer</span><span class="result"> extends <span class="extype" name="org.json4s.CustomSerializer">CustomSerializer</span>[<span class="extype" name="java.time.LocalDateTime">LocalDateTime</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
           <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="org.json4s.CustomSerializer">CustomSerializer</span>[<span class="extype" name="org.joda.time.DateTime">DateTime</span>], <span class="extype" name="org.json4s.Serializer">Serializer</span>[<span class="extype" name="org.joda.time.DateTime">DateTime</span>], <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="org.json4s.CustomSerializer">CustomSerializer</span>[<span class="extype" name="java.time.LocalDateTime">LocalDateTime</span>], <span class="extype" name="org.json4s.Serializer">Serializer</span>[<span class="extype" name="java.time.LocalDateTime">LocalDateTime</span>], <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -204,14 +204,14 @@
         </dd></dl></div>
     </li><li name="org.json4s.CustomSerializer#deserialize" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="deserialize(implicitformat:org.json4s.Formats):PartialFunction[(org.json4s.TypeInfo,org.json4s.JValue),A]"></a>
-      <a id="deserialize(Formats):PartialFunction[(TypeInfo,JValue),DateTime]"></a>
+      <a id="deserialize(Formats):PartialFunction[(TypeInfo,JValue),LocalDateTime]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">deserialize</span><span class="params">(<span class="implicit">implicit </span><span name="format">format: <span class="extype" name="org.json4s.Formats">Formats</span></span>)</span><span class="result">: <span class="extype" name="scala.PartialFunction">PartialFunction</span>[(<span class="extype" name="org.json4s.TypeInfo">TypeInfo</span>, <span class="extype" name="org.json4s.JValue">JValue</span>), <span class="extype" name="org.joda.time.DateTime">DateTime</span>]</span>
+        <span class="name">deserialize</span><span class="params">(<span class="implicit">implicit </span><span name="format">format: <span class="extype" name="org.json4s.Formats">Formats</span></span>)</span><span class="result">: <span class="extype" name="scala.PartialFunction">PartialFunction</span>[(<span class="extype" name="org.json4s.TypeInfo">TypeInfo</span>, <span class="extype" name="org.json4s.JValue">JValue</span>), <span class="extype" name="java.time.LocalDateTime">LocalDateTime</span>]</span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../index.html#com.lifeomic.fhirlib.v3.DateTimeSerializer$@deserialize(implicitformat:org.json4s.Formats):PartialFunction[(org.json4s.TypeInfo,org.json4s.JValue),A]" title="Permalink" target="_top">
@@ -482,9 +482,9 @@
             </div><div class="parent" name="scala.Equals">
               <h3>Inherited from <span class="extype" name="scala.Equals">Equals</span></h3>
             </div><div class="parent" name="org.json4s.CustomSerializer">
-              <h3>Inherited from <span class="extype" name="org.json4s.CustomSerializer">CustomSerializer</span>[<span class="extype" name="org.joda.time.DateTime">DateTime</span>]</h3>
+              <h3>Inherited from <span class="extype" name="org.json4s.CustomSerializer">CustomSerializer</span>[<span class="extype" name="java.time.LocalDateTime">LocalDateTime</span>]</h3>
             </div><div class="parent" name="org.json4s.Serializer">
-              <h3>Inherited from <span class="extype" name="org.json4s.Serializer">Serializer</span>[<span class="extype" name="org.joda.time.DateTime">DateTime</span>]</h3>
+              <h3>Inherited from <span class="extype" name="org.json4s.Serializer">Serializer</span>[<span class="extype" name="java.time.LocalDateTime">LocalDateTime</span>]</h3>
             </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
             </div><div class="parent" name="scala.Any">
