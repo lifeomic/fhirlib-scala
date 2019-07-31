@@ -7,7 +7,7 @@ import java.util.regex.Pattern
 
 object DateUtils {
 
-  private val regex = "(\\d{4}(-\\d{2}(-\\d{2}(T\\d{2}(:\\d{2}(:\\d{2}(Z|[\\+|\\-]\\d{2}:\\d{2})?)?)?)?)?)?)"
+  private val regex = "(\\d{4}(-\\d{2}(-\\d{2}(T\\d{2}(:\\d{2}(:\\d{2}(.\\d{3}(Z|[\\+|\\-]\\d{2}:\\d{2})?)?)?)?)?)?)?)"
 
   private val formatters: Array[DateTimeFormatter] = Array(
 
@@ -49,10 +49,17 @@ object DateUtils {
     new DateTimeFormatterBuilder()
       .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
       .parseDefaulting(ChronoField.MILLI_OF_SECOND, 0)
+      .appendPattern("[XXXXX]")
       .toFormatter(),
     new DateTimeFormatterBuilder()
-      .appendPattern("yyyy-MM-dd'T'HH:mm:ssXXXXX")
-      .parseDefaulting(ChronoField.MILLI_OF_SECOND, 0)
+      .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
+      .appendFraction(ChronoField.MILLI_OF_SECOND, 0, 6, true)
+      .appendPattern("[XXXXX]")
+      .toFormatter(),
+    new DateTimeFormatterBuilder()
+      .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
+      .appendFraction(ChronoField.MILLI_OF_SECOND, 0, 6, true)
+      .appendPattern("[XXXXX]")
       .toFormatter()
   )
 
@@ -82,13 +89,13 @@ object DateUtils {
       i += 1
     }
 
-    if (i < 1 || i > 7) {
+    if (i < 1 || i > 8) {
       throw new RuntimeException("unable to determine format of datetime")
     }
 
     val formatter: DateTimeFormatter = formatters(i - 1)
 
-    if (i < 7) {
+    if (i < 8) {
       Some(LocalDateTime.parse(s, formatter))
     } else {
       Some(ZonedDateTime.parse(s, formatter).withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime)
