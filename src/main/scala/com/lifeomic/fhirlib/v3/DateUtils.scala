@@ -1,6 +1,6 @@
 package com.lifeomic.fhirlib.v3
 
-import java.time.{LocalDateTime, ZoneId, ZonedDateTime}
+import java.time.{LocalDateTime, ZoneId, ZoneOffset, ZonedDateTime}
 import java.time.format.{DateTimeFormatter, DateTimeFormatterBuilder}
 import java.time.temporal.ChronoField
 import java.util.regex.Pattern
@@ -50,16 +50,19 @@ object DateUtils {
       .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
       .parseDefaulting(ChronoField.MILLI_OF_SECOND, 0)
       .appendPattern("[XXXXX]")
+      .parseDefaulting(ChronoField.OFFSET_SECONDS, ZoneOffset.UTC.getTotalSeconds())
       .toFormatter(),
     new DateTimeFormatterBuilder()
       .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
       .appendFraction(ChronoField.MILLI_OF_SECOND, 0, 6, true)
       .appendPattern("[XXXXX]")
+      .parseDefaulting(ChronoField.OFFSET_SECONDS, ZoneOffset.UTC.getTotalSeconds())
       .toFormatter(),
     new DateTimeFormatterBuilder()
       .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
       .appendFraction(ChronoField.MILLI_OF_SECOND, 0, 6, true)
       .appendPattern("[XXXXX]")
+      .parseDefaulting(ChronoField.OFFSET_SECONDS, ZoneOffset.UTC.getTotalSeconds())
       .toFormatter()
   )
 
@@ -95,7 +98,7 @@ object DateUtils {
 
     val formatter: DateTimeFormatter = formatters(i - 1)
 
-    if (i < 8) {
+    if (i < 6) {
       Some(LocalDateTime.parse(s, formatter))
     } else {
       Some(ZonedDateTime.parse(s, formatter).withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime)
