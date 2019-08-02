@@ -7,7 +7,7 @@ import java.util.regex.Pattern
 
 object DateUtils {
 
-  private val regex = "(\\d{4}(-\\d{2}(-\\d{2}(T\\d{2}(:\\d{2}(:\\d{2}(Z|[\\+|\\-]\\d{2}:\\d{2})?)?)?)?)?)?)"
+  private val regex = "(\\d{4}(-\\d{2}(-\\d{2}(T\\d{2}(:\\d{2}(:\\d{2}(Z|[\\+|\\-]\\d{2}:\\d{2}|.\\d{3}Z|.\\d{3}[\\+|\\-]\\d{2}:\\d{2})?)?)?)?)?)?)"
 
   private val formatters: Array[DateTimeFormatter] = Array(
 
@@ -48,11 +48,12 @@ object DateUtils {
       .toFormatter(),
     new DateTimeFormatterBuilder()
       .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
-      .parseDefaulting(ChronoField.MILLI_OF_SECOND, 0)
+      .appendFraction(ChronoField.MILLI_OF_SECOND, 0, 6, true)
       .toFormatter(),
     new DateTimeFormatterBuilder()
-      .appendPattern("yyyy-MM-dd'T'HH:mm:ssXXXXX")
-      .parseDefaulting(ChronoField.MILLI_OF_SECOND, 0)
+      .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
+      .appendFraction(ChronoField.MILLI_OF_SECOND, 0, 6, true)
+      .appendPattern("XXXXX")
       .toFormatter()
   )
 
