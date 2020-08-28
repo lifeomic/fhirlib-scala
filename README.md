@@ -41,7 +41,7 @@ mvn deploy
 ## Built With
 
 * [Scala](https://www.scala-lang.org/) - The Scala Programming Language
-* [Json4s](http://json4s.org/) - One AST to rule them all
+* [Json4s](https://github.com/json4s/json4s) - One AST to rule them all
 
 ## Contributing
 
