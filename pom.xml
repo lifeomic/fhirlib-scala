@@ -6,7 +6,7 @@
 
     <groupId>com.lifeomic</groupId>
     <artifactId>fhirlib</artifactId>
-    <version>0.7.0</version>
+    <version>0.8.0</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -52,7 +52,7 @@
         <scala.major.version>2</scala.major.version>
         <scala.minor.version>11</scala.minor.version>
         <scala.patch.version>12</scala.patch.version>
-        <json4s.version>3.2.11</json4s.version>
+        <json4s.version>3.5.3</json4s.version>
     </properties>
 
     <dependencies>
