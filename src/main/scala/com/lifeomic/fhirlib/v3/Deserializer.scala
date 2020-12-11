@@ -61,6 +61,15 @@ object ResourceSerializer extends Serializer[Resource] {
   def serialize(implicit format: Formats): PartialFunction[Any, JValue] = Map()
 }
 
+/**
+  * Serializer to handle empty [[Reference]] encountered during deserialization.
+  *
+  * This serializer exists because there is a circular reference between Reference.identifier and Identifier.reference.
+  * Changes made in json4s version 3.5 result in an infinite recursive loop of deserialization if either
+  * Reference.identifier or Identifier.reference are empty.
+  * This serializer detects when an empty [[Reference]] is being deserialized and simply returns an instance
+  * with all its fields set to [[None]].
+  */
 object EmptyReferenceSerializer extends Serializer[Reference] {
     private val ReferenceClass = classOf[Reference]
 
@@ -86,6 +95,27 @@ object EmptyReferenceSerializer extends Serializer[Reference] {
     override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = Map()
 }
 
+/**
+  * Serializers which handle auto-conversion from single-element arrays to non-JSON-array values.
+  *
+  * The serializers below exist because of changes made in json4s version 3.5.
+  * In versions < 3.5, if a target field was a single value, and a serialized, single-element array of values
+  * was found, the single-element was extracted and assigned to the target field.
+  * This is the same behavior of the Jackson UNWRAP_SINGLE_VALUE_ARRAYS deserializer feature:
+  *     https://github.com/FasterXML/jackson-databind/wiki/Deserialization-Features#structural-conversions.
+  *
+  * The serializers below cover the primitive types used by the FHIR data types.
+  * Each serializer looks for a single-value, primitive, target type (String, Int, etc) and a JArray
+  * containing a single element. If both these conditions are met, the lone value will be pulled out of the
+  * array and returned as the value to assign in the primitive value.
+  *
+  * This issue can be seen by stepping through the "Test MedicationStatement2" with a debugger.
+  * Place a breakpoint on org.json4s.Extraction:358.
+  * Examine the "json" and "scalaType" parameters after a few recursive calls on the medicationReference.reference
+  * field.
+  * In version < 3.5 the values are JString(...) and String respectively.
+  * In version >= 3.5 the values are JArray(List(JString(...))) and String respectively.
+  */
 object UnwrapStringSerializer extends Serializer[String] {
     private val TargetClass = classOf[String]
 
@@ -106,7 +136,7 @@ object UnwrapStringSerializer extends Serializer[String] {
                 infoValue._2 match {
                     case x: JArray => x.arr.head match {
                         case v: JString => v.s
-                        case _ => throw new MappingException(s"Nested value is not a $TargetClass")
+                        case _ => throw new MappingException(s"Nested value is not a JString")
                     }
                     case _ => throw new MappingException("Invalid type")
                 }
@@ -137,7 +167,7 @@ object UnwrapIntSerializer extends Serializer[Int] {
                 infoValue._2 match {
                     case x: JArray => x.arr.head match {
                         case v: JInt => v.num.intValue()
-                        case _ => throw new MappingException(s"Nested value is not a $TargetClass")
+                        case _ => throw new MappingException(s"Nested value is not a JInt")
                     }
                     case _ => throw new MappingException("Invalid type")
                 }
@@ -168,7 +198,7 @@ object UnwrapLongSerializer extends Serializer[Long] {
                 infoValue._2 match {
                     case x: JArray => x.arr.head match {
                         case v: JLong => v.num
-                        case _ => throw new MappingException(s"Nested value is not a $TargetClass")
+                        case _ => throw new MappingException(s"Nested value is not a JLong")
                     }
                     case _ => throw new MappingException("Invalid type")
                 }
@@ -199,7 +229,7 @@ object UnwrapDoubleSerializer extends Serializer[Double] {
                 infoValue._2 match {
                     case x: JArray => x.arr.head match {
                         case v: JDouble => v.num
-                        case _ => throw new MappingException(s"Nested value is not a $TargetClass")
+                        case _ => throw new MappingException(s"Nested value is not a JDouble")
                     }
                     case _ => throw new MappingException("Invalid type")
                 }
@@ -230,7 +260,7 @@ object UnwrapBooleanSerializer extends Serializer[Boolean] {
                 infoValue._2 match {
                     case x: JArray => x.arr.head match {
                         case v: JBool => v.value
-                        case _ => throw new MappingException(s"Nested value is not a $TargetClass")
+                        case _ => throw new MappingException(s"Nested value is not a JBoolean")
                     }
                     case _ => throw new MappingException("Invalid type")
                 }
