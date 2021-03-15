@@ -33,6 +33,7 @@ object ResourceSerializer extends Serializer[Resource] {
         x.values.get("resourceType").orNull match {
 
           case "Condition" => json.extract[Condition]
+          case "Coverage" => json.extract[Coverage]
           case "Media" => json.extract[Media]
           case "Medication" => json.extract[Medication]
           case "MedicationAdministration" => json.extract[MedicationAdministration]
@@ -289,6 +290,7 @@ object Deserializer {
       new EnumNameSerializer(Address_Use) +
       new EnumNameSerializer(Address_Type) +
       new EnumNameSerializer(ClinicalStatus) +
+      new EnumNameSerializer(CoverageStatus) +
       new EnumNameSerializer(Gender) +
       new EnumNameSerializer(HumanName_Use) +
       new EnumNameSerializer(Identifier_Use) +

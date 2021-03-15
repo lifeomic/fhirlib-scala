@@ -93,6 +93,21 @@ class TestSuite extends FunSuite {
     assert(resource.note.get.head.text.get == "Routine Appendectomy. Appendix was inflamed and in retro-caecal position")
   }
 
+  test("Test Coverage") {
+    val json = scala.io.Source.fromFile(getClass.getResource("/Coverage.test.json").getFile).mkString
+    val resource = Deserializer.loadFhirResource(json).asInstanceOf[Coverage]
+
+    assert(resource.id.get == "9876B1")
+    assert(resource.status.get == "active")
+    assert(resource.`type`.get.coding.get.head.system.get.toString == "http://hl7.org/fhir/v3/ActCode")
+    assert(resource.`type`.get.coding.get.head.code.get == "EHCPOL")
+    assert(resource.`type`.get.coding.get.head.display.get == "extended healthcare")
+    assert(resource.beneficiary.get.findId().get == "4")
+    assert(resource.period.get.start.map(d => d.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))).getOrElse(Assert.fail()) == "2011-05-23")
+    assert(resource.period.get.end.map(d => d.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))).getOrElse(Assert.fail()) == "2012-05-23")
+    assert(resource.grouping.get.subPlan.get == "P7")
+  }
+
   test("Test Sequence") {
     val json = scala.io.Source.fromFile(getClass.getResource("/Sequence.json").getFile).mkString
     val resource = Deserializer.loadFhirResource(json).asInstanceOf[Sequence]
