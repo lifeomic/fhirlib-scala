@@ -124,6 +124,21 @@ class TestSuite extends FunSuite {
     assert(resource.total.get.value.get == 12500.0)
   }
 
+  test("Test ExplanationOfBenefit") {
+    val json = scala.io.Source.fromFile(getClass.getResource("/ExplanationOfBenefit.test.json").getFile).mkString
+    val resource = Deserializer.loadFhirResource(json).asInstanceOf[ExplanationOfBenefit]
+
+    assert(resource.id.get == "EB3500")
+    assert(resource.status.get == "active")
+    assert(resource.`type`.get.coding.get.head.code.get == "oral")
+    assert(resource.payee.get.`type`.get.coding.get.head.code.get == "provider")
+    assert(resource.careTeam.get.head.provider.get.reference.get == "Practitioner/example")
+    assert(resource.item.get.head.servicedDate.map(d => d.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))).getOrElse(Assert.fail()) == "2014-08-16")
+    assert(resource.item.get.head.adjudication.get.head.category.get.coding.get.head.code.get == "eligible")
+    assert(resource.totalCost.get.value.get == 135.57)
+    assert(resource.totalBenefit.get.value.get == 96.0)
+  }
+
   test("Test Sequence") {
     val json = scala.io.Source.fromFile(getClass.getResource("/Sequence.json").getFile).mkString
     val resource = Deserializer.loadFhirResource(json).asInstanceOf[Sequence]
