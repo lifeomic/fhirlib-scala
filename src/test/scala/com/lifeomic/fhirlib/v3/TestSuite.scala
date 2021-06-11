@@ -194,6 +194,12 @@ class TestSuite extends FunSuite {
     assert(media.meta.get.tag.get.head.code.get == "b5affd0b-329c-4e73-a9b5-122938462ce9")
   }
 
+  test("Test Procedure with bad reference value") {
+    val json = scala.io.Source.fromFile(getClass.getResource("/Procedure-bad-reference.test.json").getFile).mkString
+    val resource = Deserializer.loadFhirResource(json).asInstanceOf[Procedure]
+
+    assert(resource.subject.get.findId().isEmpty)
+  }
 
   private def testPatient(res: String) = {
     val json = scala.io.Source.fromFile(getClass.getResource(res).getFile).mkString
